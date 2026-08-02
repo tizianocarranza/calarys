@@ -1,0 +1,205 @@
+"use client";
+
+import { useEffect, useState } from "react";
+
+import {
+  getComponentDefinition,
+  type ComponentId,
+} from "@/registry/component-registry";
+
+import type {
+  PlaygroundConfig,
+  PlaygroundControl,
+  PlaygroundValue,
+} from "../../types/playground";
+
+import styles from "./component-playground.module.css";
+
+type ComponentPlaygroundProps = {
+  componentId: ComponentId;
+};
+
+export function ComponentPlayground({
+  componentId,
+}: ComponentPlaygroundProps) {
+  const definition = getComponentDefinition(componentId);
+
+  const [config, setConfig] = useState<PlaygroundConfig>(
+    definition.defaultConfig,
+  );
+
+  const [copied, setCopied] = useState(false);
+
+  useEffect(() => {
+    setConfig(definition.defaultConfig);
+  }, [definition]);
+
+  const generatedCode = definition.generateCode(
+    config as typeof definition.defaultConfig,
+  );
+
+  function updateConfig(
+    key: string,
+    value: PlaygroundValue,
+  ) {
+    setConfig((currentConfig) => ({
+      ...currentConfig,
+      [key]: value,
+    }));
+  }
+
+  function resetConfig() {
+    setConfig(definition.defaultConfig);
+  }
+
+  async function copyCode() {
+    try {
+      await navigator.clipboard.writeText(generatedCode);
+
+      setCopied(true);
+
+      window.setTimeout(() => {
+        setCopied(false);
+      }, 1500);
+    } catch {
+      setCopied(false);
+    }
+  }
+
+  return (
+    <div className={styles.playground}>
+      <section className={styles.preview}>
+        <div className={styles.previewGrid}>
+          {definition.render(
+            config as typeof definition.defaultConfig,
+          )}
+        </div>
+      </section>
+
+      <aside className={styles.controls}>
+        <div className={styles.controlsHeader}>
+          <span>Customize</span>
+
+          <button type="button" onClick={resetConfig}>
+            Reset
+          </button>
+        </div>
+
+        {definition.controls.map((control) => (
+          <ControlRenderer
+            key={control.key}
+            control={
+              control as PlaygroundControl<PlaygroundConfig>
+            }
+            value={config[control.key]}
+            onChange={(value) => {
+              updateConfig(control.key, value);
+            }}
+          />
+        ))}
+
+        <div className={styles.code}>
+          <pre>
+            <code>{generatedCode}</code>
+          </pre>
+
+          <button type="button" onClick={copyCode}>
+            {copied ? "Copied" : "Copy code"}
+          </button>
+        </div>
+      </aside>
+    </div>
+  );
+}
+
+type ControlRendererProps = {
+  control: PlaygroundControl<PlaygroundConfig>;
+  value: PlaygroundValue;
+  onChange: (value: PlaygroundValue) => void;
+};
+
+function ControlRenderer({
+  control,
+  value,
+  onChange,
+}: ControlRendererProps) {
+  switch (control.type) {
+    case "range":
+      return (
+        <label className={styles.field}>
+          <span className={styles.fieldHeader}>
+            <span>{control.label}</span>
+
+            <output>
+              {String(value)}
+              {control.suffix}
+            </output>
+          </span>
+
+          <input
+            type="range"
+            min={control.min}
+            max={control.max}
+            step={control.step}
+            value={Number(value)}
+            onChange={(event) => {
+              onChange(Number(event.target.value));
+            }}
+          />
+        </label>
+      );
+
+    case "color":
+      return (
+        <label className={styles.field}>
+          <span>{control.label}</span>
+
+          <input
+            type="color"
+            value={String(value)}
+            onChange={(event) => {
+              onChange(event.target.value);
+            }}
+          />
+        </label>
+      );
+
+    case "select":
+      return (
+        <label className={styles.field}>
+          <span>{control.label}</span>
+
+          <select
+            value={String(value)}
+            onChange={(event) => {
+              onChange(event.target.value);
+            }}
+          >
+            {control.options.map((option) => (
+              <option
+                key={option.value}
+                value={option.value}
+              >
+                {option.label}
+              </option>
+            ))}
+          </select>
+        </label>
+      );
+
+    case "toggle":
+      return (
+        <label className={styles.toggleField}>
+          <span>{control.label}</span>
+
+          <input
+            type="checkbox"
+            checked={Boolean(value)}
+            onChange={(event) => {
+              onChange(event.target.checked);
+            }}
+          />
+        </label>
+      );
+  }
+}

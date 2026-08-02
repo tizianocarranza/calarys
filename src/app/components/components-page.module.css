@@ -1,0 +1,40 @@
+.page {
+  min-height: 100vh;
+  padding: 6rem clamp(1.5rem, 5vw, 5rem);
+}
+
+.header {
+  max-width: 48rem;
+  margin-bottom: 5rem;
+}
+
+.eyebrow {
+  display: block;
+  margin-bottom: 1.25rem;
+
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+
+  opacity: 0.5;
+}
+
+.header h1 {
+  margin: 0;
+
+  font-size: clamp(4rem, 10vw, 9rem);
+  font-weight: 500;
+  line-height: 0.9;
+  letter-spacing: -0.07em;
+}
+
+.header p {
+  max-width: 34rem;
+  margin-top: 2rem;
+
+  font-size: clamp(1rem, 1.5vw, 1.25rem);
+  line-height: 1.6;
+
+  opacity: 0.65;
+}
