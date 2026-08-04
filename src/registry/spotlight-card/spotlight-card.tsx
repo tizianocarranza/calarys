@@ -4,16 +4,11 @@ import {
   type CSSProperties,
   type PointerEvent,
   type ReactNode,
+  useEffect,
   useRef,
 } from "react";
 
 import styles from "./spotlight-card.module.css";
-
-export type MarbleTexture =
-  | "ivory"
-  | "white"
-  | "dark"
-  | "none";
 
 export type SpotlightCardProps = {
   children: ReactNode;
@@ -26,21 +21,19 @@ export type SpotlightCardProps = {
   borderColor?: string;
   padding?: number;
   cornerRadius?: number;
-  texture?: MarbleTexture;
 };
 
 export function SpotlightCard({
   children,
   radius = 200,
   intensity = 0.65,
-  spotlightColor = "#fff3c4",
-  backgroundColor = "#eceae6",
+  spotlightColor = "#ffffff",
+  backgroundColor = "#e9e7e2",
   textColor = "#181714",
   border = true,
   borderColor = "rgba(0, 0, 0, 0.12)",
   padding = 32,
   cornerRadius = 24,
-  texture = "ivory",
 }: SpotlightCardProps) {
   const cardRef = useRef<HTMLElement>(null);
   const frameRef = useRef<number | null>(null);
@@ -62,6 +55,7 @@ export function SpotlightCard({
     if (!card) return;
 
     const rect = card.getBoundingClientRect();
+
     const x = event.clientX - rect.left;
     const y = event.clientY - rect.top;
 
@@ -74,6 +68,23 @@ export function SpotlightCard({
       frameRef.current = null;
     });
   }
+
+  function handlePointerLeave() {
+    const card = cardRef.current;
+
+    if (!card) return;
+
+    card.style.setProperty("--pointer-x", "50%");
+    card.style.setProperty("--pointer-y", "50%");
+  }
+
+  useEffect(() => {
+    return () => {
+      if (frameRef.current !== null) {
+        cancelAnimationFrame(frameRef.current);
+      }
+    };
+  }, []);
 
   const cardStyle = {
     "--pointer-x": "50%",
@@ -94,8 +105,9 @@ export function SpotlightCard({
       className={styles.card}
       style={cardStyle}
       data-border={border}
-      data-texture={texture}
       onPointerMove={handlePointerMove}
+      onPointerLeave={handlePointerLeave}
+      onPointerCancel={handlePointerLeave}
     >
       <div className={styles.content}>{children}</div>
     </article>
