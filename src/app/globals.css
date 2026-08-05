@@ -7,6 +7,15 @@
   --border: rgb(17 17 17 / 12%);
 }
 
+@theme {
+  --font-sans: var(--font-sans);
+  --font-serif: var(--font-serif);
+
+  --text-display-xl: clamp(5rem, 2rem + 8vw, 11rem);
+  --text-display-lg: clamp(4rem, 2rem + 6vw, 8rem);
+  --text-display-md: clamp(3rem, 1.5rem + 4vw, 6rem);
+}
+
 * {
   box-sizing: border-box;
 }
@@ -14,6 +23,7 @@
 html {
   color: var(--foreground);
   background: var(--background);
+  font-family: var(--font-sans);
 }
 
 body {
@@ -29,12 +39,6 @@ select {
 a {
   color: inherit;
   text-decoration: none;
-}
-
-main {
-  width: min(100% - 3rem, 90rem);
-  margin: 0 auto;
-  padding-block: 3rem;
 }
 
 .component-header {
