@@ -1,0 +1,116 @@
+.hero {
+  position: relative;
+
+  min-height: 100vh;
+
+  padding-top: 30vh;
+  padding-inline: 5rem;
+}
+
+.title {
+  max-width: 72rem;
+
+  font-family: var(--font-serif);
+  font-size: var(--text-display-xl);
+  font-weight: 500;
+  line-height: 0.82;
+  letter-spacing: -0.04em;
+}
+
+.explore {
+  position: absolute;
+  bottom: 2.5rem;
+  left: 50%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  gap: 1rem;
+
+  transform: translateX(-50%);
+}
+
+.exploreLine {
+  width: 1px;
+  height: 3.5rem;
+
+  background: currentColor;
+
+  transform-origin: top;
+
+  animation:
+    line-breathe 2.6s ease-in-out infinite,
+    retract-line linear both;
+
+  animation-timeline:
+    auto,
+    scroll(root block);
+
+  animation-range:
+    normal,
+    0 15vh;
+}
+
+.exploreLabel {
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.28em;
+
+  animation: hide-explore-label linear both;
+  animation-timeline: scroll(root block);
+  animation-range: 0 10vh;
+}
+
+/* ---------------------------------- */
+/* Explore idle animation             */
+/* ---------------------------------- */
+
+@keyframes line-breathe {
+  0%,
+  100% {
+    scale: 1 0.75;
+  }
+
+  50% {
+    scale: 1 1;
+  }
+}
+
+/* ---------------------------------- */
+/* Explore scroll transition          */
+/* ---------------------------------- */
+
+@keyframes retract-line {
+  from {
+    clip-path: inset(0 0 0 0);
+  }
+
+  to {
+    clip-path: inset(100% 0 0 0);
+  }
+}
+
+@keyframes hide-explore-label {
+  from {
+    opacity: 1;
+    translate: 0 0;
+  }
+
+  to {
+    opacity: 0;
+    translate: 0 0.5rem;
+  }
+}
+
+/* ---------------------------------- */
+/* Reduced motion                     */
+/* ---------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .exploreLine,
+  .exploreLabel {
+    animation: none;
+  }
+}

@@ -21,6 +21,11 @@ export function Navbar() {
 
           <kbd className={styles.kbd}>⌘K</kbd>
         </button>
+
+        <button className={styles.menuButton} aria-label="Open menu">
+          <span />
+          <span />
+        </button>
       </div>
     </nav>
   );
