@@ -19,9 +19,7 @@ type ComponentPlaygroundProps = {
   componentId: ComponentId;
 };
 
-export function ComponentPlayground({
-  componentId,
-}: ComponentPlaygroundProps) {
+export function ComponentPlayground({ componentId }: ComponentPlaygroundProps) {
   const definition = getComponentDefinition(componentId);
 
   const [config, setConfig] = useState<PlaygroundConfig>(
@@ -34,14 +32,9 @@ export function ComponentPlayground({
     setConfig(definition.defaultConfig);
   }, [definition]);
 
-  const generatedCode = definition.generateCode(
-    config as typeof definition.defaultConfig,
-  );
+  const generatedCode = definition.generateCodeFromConfig(config);
 
-  function updateConfig(
-    key: string,
-    value: PlaygroundValue,
-  ) {
+  function updateConfig(key: string, value: PlaygroundValue) {
     setConfig((currentConfig) => ({
       ...currentConfig,
       [key]: value,
@@ -69,11 +62,7 @@ export function ComponentPlayground({
   return (
     <div className={styles.playground}>
       <section className={styles.preview}>
-        <div className={styles.previewGrid}>
-          {definition.render(
-            config as typeof definition.defaultConfig,
-          )}
-        </div>
+        <div className={styles.previewGrid}>{definition.renderConfig(config)}</div>
       </section>
 
       <aside className={styles.controls}>
@@ -88,9 +77,7 @@ export function ComponentPlayground({
         {definition.controls.map((control) => (
           <ControlRenderer
             key={control.key}
-            control={
-              control as PlaygroundControl<PlaygroundConfig>
-            }
+            control={control as PlaygroundControl<PlaygroundConfig>}
             value={config[control.key]}
             onChange={(value) => {
               updateConfig(control.key, value);
@@ -118,11 +105,7 @@ type ControlRendererProps = {
   onChange: (value: PlaygroundValue) => void;
 };
 
-function ControlRenderer({
-  control,
-  value,
-  onChange,
-}: ControlRendererProps) {
+function ControlRenderer({ control, value, onChange }: ControlRendererProps) {
   switch (control.type) {
     case "range":
       return (
@@ -176,10 +159,7 @@ function ControlRenderer({
             }}
           >
             {control.options.map((option) => (
-              <option
-                key={option.value}
-                value={option.value}
-              >
+              <option key={option.value} value={option.value}>
                 {option.label}
               </option>
             ))}

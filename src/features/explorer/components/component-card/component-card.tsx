@@ -17,7 +17,7 @@ export function ComponentCard({
       className={styles.card}
     >
       <div className={styles.preview}>
-        {component.render(component.defaultConfig)}
+        {component.renderDefault()}
       </div>
 
       <div className={styles.content}>

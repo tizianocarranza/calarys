@@ -21,7 +21,7 @@ export default function ComponentsPage() {
         </p>
       </header>
 
-      <ComponentExplorer components={components} />
+      <ComponentExplorer />
     </main>
   );
 }

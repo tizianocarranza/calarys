@@ -46,7 +46,18 @@ export type PlaygroundControl<TConfig extends PlaygroundConfig> =
 export function defineComponent<TConfig extends PlaygroundConfig>(
   definition: ComponentDefinition<TConfig>,
 ) {
-  return definition;
+  return {
+    ...definition,
+
+    renderDefault: () =>
+      definition.render(definition.defaultConfig),
+
+    renderConfig: (config: PlaygroundConfig) =>
+      definition.render(config as TConfig),
+
+    generateCodeFromConfig: (config: PlaygroundConfig) =>
+      definition.generateCode(config as TConfig),
+  };
 }
 
 export type ComponentCategory =
