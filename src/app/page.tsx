@@ -27,18 +27,22 @@ export default function Home() {
 
       <ComponentShowcase
         items={[
+          
           {
             id: "magnetic-button",
             component: <MagneticButton>Explore 1</MagneticButton>,
           },
+          
           {
             id: "spotlight-card",
             component: <SpotlightCardDemo border={false} shadow={true} />,
           },
+         
+          
           {
             id: "toggle",
             component: <><ToggleDemo size="sm" shadow={true} /> <ToggleDemo size="md"/> <ToggleDemo size="lg" shadow={true} /></>,
-          },
+          }, 
         ]}
       />
     </main>

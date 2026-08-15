@@ -29,7 +29,7 @@ export default function RootLayout({
       lang="en"
       className={`${instrumentSans.variable} ${cormorantGaramond.variable} h-full antialiased`}
     >
-      <body className="relative w-full min-h-full h-[200vh] flex flex-col">
+      <body className="relative w-full min-h-full flex flex-col">
         <SmoothScrollProvider>
           <Navbar />
           {children}
