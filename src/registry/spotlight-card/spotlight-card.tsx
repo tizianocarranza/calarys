@@ -19,6 +19,7 @@ export type SpotlightCardProps = {
   textColor?: string;
   border?: boolean;
   borderColor?: string;
+  shadow?: boolean;
   padding?: number;
   cornerRadius?: number;
 };
@@ -32,10 +33,11 @@ export function SpotlightCard({
   textColor = "#181714",
   border = true,
   borderColor = "rgba(0, 0, 0, 0.12)",
+  shadow = false,
   padding = 32,
   cornerRadius = 24,
 }: SpotlightCardProps) {
-  const cardRef = useRef<HTMLElement>(null);
+  const cardRef = useRef<HTMLDivElement>(null);
   const frameRef = useRef<number | null>(null);
 
   function updatePointerPosition(x: number, y: number) {
@@ -47,9 +49,7 @@ export function SpotlightCard({
     card.style.setProperty("--pointer-y", `${y}px`);
   }
 
-  function handlePointerMove(
-    event: PointerEvent<HTMLElement>,
-  ) {
+  function handlePointerMove(event: PointerEvent<HTMLDivElement>) {
     const card = cardRef.current;
 
     if (!card) return;
@@ -65,6 +65,9 @@ export function SpotlightCard({
 
     frameRef.current = requestAnimationFrame(() => {
       updatePointerPosition(x, y);
+
+      card.style.setProperty("--spotlight-active", "1");
+
       frameRef.current = null;
     });
   }
@@ -74,8 +77,7 @@ export function SpotlightCard({
 
     if (!card) return;
 
-    card.style.setProperty("--pointer-x", "50%");
-    card.style.setProperty("--pointer-y", "50%");
+    card.style.setProperty("--spotlight-active", "0");
   }
 
   useEffect(() => {
@@ -91,6 +93,7 @@ export function SpotlightCard({
     "--pointer-y": "50%",
     "--spotlight-radius": `${radius}px`,
     "--spotlight-intensity": intensity,
+    "--spotlight-active": 0,
     "--spotlight-color": spotlightColor,
     "--card-background": backgroundColor,
     "--card-color": textColor,
@@ -100,16 +103,17 @@ export function SpotlightCard({
   } as CSSProperties;
 
   return (
-    <article
+    <div
       ref={cardRef}
       className={styles.card}
       style={cardStyle}
       data-border={border}
+      data-shadow={shadow}
       onPointerMove={handlePointerMove}
       onPointerLeave={handlePointerLeave}
       onPointerCancel={handlePointerLeave}
     >
       <div className={styles.content}>{children}</div>
-    </article>
+    </div>
   );
 }

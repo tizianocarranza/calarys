@@ -1,9 +1,12 @@
 import { magneticButtonDefinition } from "./magnetic-button";
 import { spotlightCardDefinition } from "./spotlight-card";
+import { toggleDefinition } from "./toggle";
 
 export const componentRegistry = {
   "magnetic-button": magneticButtonDefinition,
   "spotlight-card": spotlightCardDefinition,
+  "toggle": toggleDefinition
+
 } as const;
 
 export type ComponentId = keyof typeof componentRegistry;

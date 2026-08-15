@@ -1,232 +1,49 @@
+@property --spotlight-active {
+  syntax: "<number>";
+  inherits: false;
+  initial-value: 0;
+}
+
+
 .card {
   position: relative;
-  isolation: isolate;
+  overflow: hidden;
 
-  width: min(100%, 38rem);
-  min-height: 27rem;
   padding: var(--card-padding);
 
   color: var(--card-color);
-  background-color: var(--card-background);
 
-  border: 1px solid transparent;
+  background:
+    radial-gradient(circle var(--spotlight-radius) at var(--pointer-x) var(--pointer-y),
+      color-mix(in srgb,
+        var(--spotlight-color) calc(var(--spotlight-intensity) * var(--spotlight-active) * 100%),
+        transparent),
+      transparent 70%),
+    var(--card-background);
+
   border-radius: var(--card-radius);
-  overflow: hidden;
 
-  box-shadow:
-    0 1.5rem 4rem rgb(29 24 16 / 10%),
-    0 0.25rem 1rem rgb(29 24 16 / 6%);
+  isolation: isolate;
+
+  transition:
+    --spotlight-active 400ms ease;
+}
+
+.card:hover {
+  --spotlight-active: 1;
+
+  transition-duration: 160ms;
 }
 
 .card[data-border="true"] {
-  border-color: var(--card-border-color);
+  border: 1px solid var(--card-border-color);
 }
 
-/* Spotlight */
-.card::before {
-  position: absolute;
-  z-index: -1;
-  inset: 0;
-
-  background: radial-gradient(
-    circle var(--spotlight-radius) at
-      var(--pointer-x) var(--pointer-y),
-    var(--spotlight-color) 0%,
-    color-mix(
-        in srgb,
-        var(--spotlight-color) 55%,
-        transparent
-      )
-      32%,
-    transparent 72%
-  );
-
-  opacity: 0;
-  pointer-events: none;
-  content: "";
-
-  transition: opacity 280ms ease;
-}
-
-.card:hover::before {
-  opacity: var(--spotlight-intensity);
-}
-
-/* Marble layer */
-.card::after {
-  position: absolute;
-  z-index: -2;
-  inset: 0;
-
-  opacity: 0.48;
-  pointer-events: none;
-  content: "";
-}
-
-/* Mármol beige */
-.card[data-texture="ivory"]::after {
-  background-image:
-    linear-gradient(
-      112deg,
-      transparent 15%,
-      rgb(124 103 75 / 12%) 16%,
-      transparent 17%,
-      transparent 51%,
-      rgb(131 107 74 / 9%) 52%,
-      transparent 53%
-    ),
-    linear-gradient(
-      164deg,
-      transparent 31%,
-      rgb(108 89 66 / 8%) 32%,
-      transparent 33%,
-      transparent 69%,
-      rgb(139 115 78 / 9%) 70%,
-      transparent 71%
-    ),
-    radial-gradient(
-      ellipse at 20% 10%,
-      rgb(255 255 255 / 55%),
-      transparent 42%
-    ),
-    radial-gradient(
-      ellipse at 80% 90%,
-      rgb(116 93 64 / 9%),
-      transparent 50%
-    );
-}
-
-/* Mármol blanco */
-.card[data-texture="white"]::after {
-  background-image:
-    linear-gradient(
-      125deg,
-      transparent 18%,
-      rgb(98 105 111 / 11%) 19%,
-      transparent 20%,
-      transparent 61%,
-      rgb(116 122 126 / 9%) 62%,
-      transparent 63%
-    ),
-    radial-gradient(
-      ellipse at 30% 20%,
-      rgb(255 255 255 / 80%),
-      transparent 48%
-    );
-}
-
-/* Mármol oscuro */
-.card[data-texture="dark"]::after {
-  background-image:
-    linear-gradient(
-      118deg,
-      transparent 20%,
-      rgb(255 255 255 / 10%) 21%,
-      transparent 22%,
-      transparent 58%,
-      rgb(255 255 255 / 7%) 59%,
-      transparent 60%
-    ),
-    radial-gradient(
-      ellipse at 65% 15%,
-      rgb(255 255 255 / 8%),
-      transparent 45%
-    );
-}
-
-.card[data-texture="none"]::after {
-  display: none;
+.card[data-shadow="true"] {
+  box-shadow: var(--shadow-component-lg);
 }
 
 .content {
   position: relative;
   z-index: 1;
-
-  display: flex;
-  min-height: inherit;
-  flex-direction: column;
-}
-
-/* Contenido de la demo */
-
-.demoHeader {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.badge {
-  padding: 0.4rem 0.7rem;
-
-  font-size: 0.7rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-
-  border: 1px solid currentColor;
-  border-radius: 999px;
-  opacity: 0.65;
-}
-
-.arrow {
-  display: grid;
-  width: 2.75rem;
-  aspect-ratio: 1;
-  place-items: center;
-
-  color: inherit;
-  font-size: 1.1rem;
-
-  background: rgb(255 255 255 / 18%);
-  border: 1px solid currentColor;
-  border-radius: 50%;
-
-  opacity: 0.65;
-}
-
-.demoBody {
-  display: flex;
-  flex: 1;
-  max-width: 25rem;
-  flex-direction: column;
-  justify-content: flex-end;
-}
-
-.demoBody h3 {
-  max-width: 24rem;
-  margin: 0;
-
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: clamp(2.5rem, 5vw, 4.25rem);
-  font-weight: 400;
-  line-height: 0.98;
-  letter-spacing: -0.055em;
-}
-
-.demoBody h3 em {
-  font-weight: 400;
-}
-
-.demoBody p {
-  max-width: 23rem;
-  margin: 1.75rem 0 2.5rem;
-
-  font-size: 1rem;
-  line-height: 1.55;
-  opacity: 0.72;
-}
-
-.cta {
-  display: inline-flex;
-  align-items: center;
-  align-self: flex-start;
-  gap: 2.5rem;
-
-  padding-bottom: 0.75rem;
-
-  color: inherit;
-  font: inherit;
-  font-weight: 500;
-  text-decoration: none;
-
-  border-bottom: 1px solid currentColor;
 }

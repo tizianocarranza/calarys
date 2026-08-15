@@ -105,6 +105,60 @@
 }
 
 /* ---------------------------------- */
+/* Mobile                             */
+/* ---------------------------------- */
+@media (max-width: 900px) {
+  .hero {
+    min-height: 100svh;
+
+    padding-top: 24vh;
+    padding-inline: 1.5rem;
+  }
+
+  .title {
+    max-width: 34rem;
+
+    font-size: clamp(4rem, 13vw, 7rem);
+    line-height: 0.88;
+    letter-spacing: -0.045em;
+  }
+
+  .explore {
+    bottom: 1.75rem;
+  }
+
+  .exploreLine {
+    height: 2.75rem;
+  }
+
+  .exploreLabel {
+    font-size: 0.625rem;
+    letter-spacing: 0.24em;
+  }
+}
+
+/* ---------------------------------- */
+/* Small Mobile                       */
+/* ---------------------------------- */
+@media (max-width: 520px) {
+  .hero {
+    padding-top: 22vh;
+    padding-inline: 1rem;
+  }
+
+  .title {
+    max-width: 20rem;
+
+    font-size: clamp(3.5rem, 16vw, 5.5rem);
+    line-height: 0.9;
+  }
+
+  .explore {
+    bottom: 1.5rem;
+  }
+}
+
+/* ---------------------------------- */
 /* Reduced motion                     */
 /* ---------------------------------- */
 
