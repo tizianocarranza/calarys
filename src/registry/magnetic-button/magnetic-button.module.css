@@ -1,7 +1,12 @@
 .magneticArea {
   display: grid;
   place-items: center;
-  padding: min(var(--magnetic-radius), 8rem);
+
+  padding: min(
+    var(--magnetic-radius),
+    8rem,
+    8vw
+  );
 }
 
 .button {

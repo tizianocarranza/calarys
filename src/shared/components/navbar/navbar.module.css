@@ -130,31 +130,33 @@
 /* ---------------------------------- */
 /* Hero transition                    */
 /* ---------------------------------- */
-.navbar[data-variant="landing"] .logo {
-  left: 50%;
-  transform: translateX(-50%);
+@media (min-width: 1051px) {
+  .navbar[data-variant="landing"] .logo {
+    left: 50%;
+    transform: translateX(-50%);
 
-  animation: position-logo linear both;
-  animation-timeline: scroll(root block);
-  animation-range: 0 30vh;
-}
+    animation: position-logo linear both;
+    animation-timeline: scroll(root block);
+    animation-range: 0 30vh;
+  }
 
-.navbar[data-variant="landing"] .links {
-  opacity: 0;
-  clip-path: inset(0 100% 0 0);
+  .navbar[data-variant="landing"] .links {
+    opacity: 0;
+    clip-path: inset(0 100% 0 0);
 
-  animation: reveal-links linear both;
-  animation-timeline: scroll(root block);
-  animation-range: 12vh 34vh;
-}
+    animation: reveal-links linear both;
+    animation-timeline: scroll(root block);
+    animation-range: 12vh 34vh;
+  }
 
-.navbar[data-variant="landing"] .search {
-  opacity: 0;
-  transform: translateY(-0.4rem);
+  .navbar[data-variant="landing"] .search {
+    opacity: 0;
+    transform: translateY(-0.4rem);
 
-  animation: reveal-search linear both;
-  animation-timeline: scroll(root block);
-  animation-range: 16vh 36vh;
+    animation: reveal-search linear both;
+    animation-timeline: scroll(root block);
+    animation-range: 16vh 36vh;
+  }
 }
 
 
@@ -208,7 +210,6 @@
 /* ---------------------------------- */
 /* Mobile / compact navbar            */
 /* ---------------------------------- */
-
 @media (max-width: 1050px) {
   .navbar {
     padding: 1.75rem 1.5rem 0;
@@ -219,18 +220,19 @@
     align-items: center;
     justify-content: space-between;
 
+    min-width: 0;
     min-height: 2.5rem;
     max-width: none;
   }
 
   .logo {
     position: static;
+    left: auto;
 
     font-size: 1rem;
     letter-spacing: 0.25em;
 
     transform: none;
-    animation: none;
   }
 
   .links,
@@ -240,6 +242,17 @@
 
   .menuButton {
     display: block;
+    flex: 0 0 auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar {
+    padding-inline: 1rem;
+  }
+
+  .logo {
+    font-size: 0.875rem;
   }
 }
 
@@ -262,17 +275,17 @@
 /* ---------------------------------- */
 
 @supports not (animation-timeline: scroll()) {
-  .logo {
+  .navbar[data-variant="landing"] .logo {
     left: 0;
     transform: none;
   }
 
-  .links {
+  .navbar[data-variant="landing"] .links {
     opacity: 1;
     clip-path: none;
   }
 
-  .search {
+  .navbar[data-variant="landing"] .search {
     opacity: 1;
     transform: none;
   }
@@ -283,6 +296,7 @@
 /* ---------------------------------- */
 
 @media (prefers-reduced-motion: reduce) {
+
   .navbar[data-variant="landing"] .logo,
   .navbar[data-variant="landing"] .links,
   .navbar[data-variant="landing"] .search {
