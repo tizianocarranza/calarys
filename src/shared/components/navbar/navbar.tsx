@@ -1,9 +1,18 @@
+"use client";
+
 import Link from "next/link";
 import styles from "./navbar.module.css";
+import { usePathname } from "next/navigation";
 
 export function Navbar() {
+  const pathname = usePathname();
+  const isLanding = pathname === "/";
+
   return (
-    <nav className={styles.navbar}>
+    <nav
+      className={styles.navbar}
+      data-variant={isLanding ? "landing" : "default"}
+    >
       <div className={styles.inner}>
         <Link href="/" className={styles.logo}>
           CALARYS
@@ -20,6 +29,11 @@ export function Navbar() {
           <span>Search</span>
 
           <kbd className={styles.kbd}>⌘K</kbd>
+        </button>
+
+        <button className={styles.menuButton} aria-label="Open menu">
+          <span />
+          <span />
         </button>
       </div>
     </nav>

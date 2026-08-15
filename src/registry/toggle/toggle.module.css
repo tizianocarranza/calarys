@@ -1,0 +1,119 @@
+.toggle {
+  --toggle-width: 3.5rem;
+  --toggle-height: 2rem;
+  --toggle-padding: 0.2rem;
+
+  display: inline-flex;
+
+  cursor: pointer;
+
+  -webkit-tap-highlight-color: transparent;
+}
+
+.input {
+  position: absolute;
+
+  width: 1px;
+  height: 1px;
+
+  overflow: hidden;
+
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+
+  white-space: nowrap;
+}
+
+.track {
+  position: relative;
+
+  width: var(--toggle-width);
+  height: var(--toggle-height);
+
+  padding: var(--toggle-padding);
+
+  background: var(--inactive-color);
+  border-radius: 999px;
+
+  transition: background 300ms ease;
+}
+
+.thumb {
+  display: block;
+
+  height: 100%;
+  aspect-ratio: 1;
+
+  background: var(--thumb-color);
+  border-radius: 50%;
+
+  box-shadow: 0 1px 3px rgb(0 0 0 / 12%);
+
+  translate: 0;
+
+  transition:
+    translate 300ms cubic-bezier(0.22, 1, 0.36, 1),
+    scale 200ms ease;
+}
+
+.input:checked + .track {
+  background: var(--active-color);
+}
+
+.input:checked + .track .thumb {
+  translate: calc(
+    var(--toggle-width) -
+    var(--toggle-height)
+  );
+}
+
+.toggle:active .thumb {
+  scale: 0.88;
+}
+
+.input:focus-visible + .track {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
+}
+
+.toggle[data-disabled="true"] {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
+.toggle[data-shadow="true"] .track {
+  box-shadow: var(--shadow-component-sm);
+}
+
+/* ---------------------------------- */
+/* Sizes                              */
+/* ---------------------------------- */
+
+.toggle[data-size="sm"] {
+  --toggle-width: 2.75rem;
+  --toggle-height: 1.6rem;
+  --toggle-padding: 0.18rem;
+}
+
+.toggle[data-size="md"] {
+  --toggle-width: 3.5rem;
+  --toggle-height: 2rem;
+  --toggle-padding: 0.2rem;
+}
+
+.toggle[data-size="lg"] {
+  --toggle-width: 4.25rem;
+  --toggle-height: 2.4rem;
+  --toggle-padding: 0.22rem;
+}
+
+/* ---------------------------------- */
+/* Reduced motion                     */
+/* ---------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .track,
+  .thumb {
+    transition: none;
+  }
+}

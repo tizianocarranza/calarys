@@ -3,6 +3,7 @@ import { defineComponent } from "@/features/playground/types/playground";
 import { SpotlightCard } from "./spotlight-card";
 
 import styles from "./spotlight-card.module.css";
+import { SpotlightCardDemo } from "./spotlight-card-demo";
 
 export type SpotlightCardConfig = {
   radius: number;
@@ -11,6 +12,7 @@ export type SpotlightCardConfig = {
   backgroundColor: string;
   textColor: string;
   border: boolean;
+  shadow: boolean;
   padding: number;
   cornerRadius: number;
 };
@@ -36,6 +38,7 @@ export const spotlightCardDefinition = defineComponent<SpotlightCardConfig>({
     backgroundColor: "#eceae6",
     textColor: "#181714",
     border: true,
+    shadow: true,
     padding: 32,
     cornerRadius: 24,
   },
@@ -79,6 +82,11 @@ export const spotlightCardDefinition = defineComponent<SpotlightCardConfig>({
       type: "toggle",
     },
     {
+      key: "shadow",
+      label: "Shadow",
+      type: "toggle",
+    },
+    {
       key: "padding",
       label: "Padding",
       type: "range",
@@ -98,35 +106,7 @@ export const spotlightCardDefinition = defineComponent<SpotlightCardConfig>({
     },
   ],
 
-  render: (config) => (
-    <SpotlightCard {...config}>
-      <div className={styles.demoHeader}>
-        <span className={styles.badge}>Premium</span>
-
-        <span className={styles.arrow} aria-hidden="true">
-          ↗
-        </span>
-      </div>
-
-      <div className={styles.demoBody}>
-        <h3>
-          Timeless design,
-          <br />
-          modern <em>performance.</em>
-        </h3>
-
-        <p>
-          Beautiful, interactive components crafted with attention to detail and
-          built to elevate your projects.
-        </p>
-
-        <span className={styles.cta}>
-          Explore components
-          <span aria-hidden="true">→</span>
-        </span>
-      </div>
-    </SpotlightCard>
-  ),
+  render: (config) => <SpotlightCardDemo {...config} />,
 
   generateCode: (config) => {
     return `<SpotlightCard
@@ -136,6 +116,7 @@ export const spotlightCardDefinition = defineComponent<SpotlightCardConfig>({
   backgroundColor="${config.backgroundColor}"
   textColor="${config.textColor}"
   border={${config.border}}
+  shadow={${config.shadow}}
   padding={${config.padding}}
   cornerRadius={${config.cornerRadius}}
 >

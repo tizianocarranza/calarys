@@ -1,21 +1,3 @@
-@import "tailwindcss";
-
-:root {
-  --background: #f8f8f8;
-  --foreground: #111111;
-  --muted: #777772;
-  --border: rgb(17 17 17 / 12%);
-}
-
-@theme {
-  --font-sans: var(--font-sans);
-  --font-serif: var(--font-serif);
-
-  --text-display-xl: clamp(5rem, 2rem + 8vw, 11rem);
-  --text-display-lg: clamp(4rem, 2rem + 6vw, 8rem);
-  --text-display-md: clamp(3rem, 1.5rem + 4vw, 6rem);
-}
-
 * {
   box-sizing: border-box;
 }

@@ -1,18 +1,46 @@
+import { ComponentShowcase } from "@/shared/components";
+import { MagneticButton } from "@/registry/magnetic-button";
+import styles from "./page.module.css";
+import {
+  SpotlightCard,
+  spotlightCardDefinition,
+  SpotlightCardDemo,
+} from "@/registry/spotlight-card";
+import { ToggleDemo } from "@/registry/toggle/toggle-demo";
+
 export default function Home() {
   return (
-    <main className="min-h-screen px-20 pt-[30vh] relative">
-      <h1 className="max-w-5xl font-serif text-display-xl font-medium leading-[0.82] tracking-[-0.04em]">
-        Designed
-        <br />
-        with intention.
-      </h1>
+    <main>
+      <section className={styles.hero}>
+        <h1 className={styles.title}>
+          Designed
+          <br />
+          with intention.
+        </h1>
 
-      <footer className="absolute bottom-14 inset-x-0 flex flex-col items-center justify-center gap-4">
-        <div className="h-20 w-px bg-neutral-300" />
-        <span className="text-[11px] font-medium tracking-[0.32em] text-neutral-500 uppercase">
-          Explore Calarys
-        </span>
-      </footer>
+        <div className={styles.explore}>
+          <div className={styles.exploreLine} />
+
+          <span className={styles.exploreLabel}>EXPLORE CALARYS</span>
+        </div>
+      </section>
+
+      <ComponentShowcase
+        items={[
+          {
+            id: "magnetic-button",
+            component: <MagneticButton>Explore 1</MagneticButton>,
+          },
+          {
+            id: "spotlight-card",
+            component: <SpotlightCardDemo border={false} shadow={true} />,
+          },
+          {
+            id: "toggle",
+            component: <><ToggleDemo size="sm" shadow={true} /> <ToggleDemo size="md"/> <ToggleDemo size="lg" shadow={true} /></>,
+          },
+        ]}
+      />
     </main>
   );
 }

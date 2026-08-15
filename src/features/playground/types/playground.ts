@@ -52,6 +52,7 @@ export function defineComponent<TConfig extends PlaygroundConfig>(
 export type ComponentCategory =
   | "buttons"
   | "cards"
+  | "controls"
   | "navigation"
   | "text"
   | "effects";
