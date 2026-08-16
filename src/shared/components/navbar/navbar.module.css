@@ -4,6 +4,7 @@
   z-index: 100;
 
   padding: 2.5rem 2rem 0;
+
 }
 
 .inner {
@@ -16,6 +17,7 @@
   min-height: 2rem;
   max-width: 80rem;
   margin-inline: auto;
+
 }
 
 .logo {

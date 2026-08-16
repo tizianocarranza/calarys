@@ -8,24 +8,12 @@ type ComponentCardProps = {
   component: RegisteredComponent;
 };
 
-export function ComponentCard({
-  component,
-}: ComponentCardProps) {
+export function ComponentCard({ component }: ComponentCardProps) {
   return (
-    <Link
-      href={`/components/${component.id}`}
-      className={styles.card}
-    >
-      <div className={styles.preview}>
-        {component.renderDefault()}
-      </div>
+    <Link href={`/components/${component.id}`} className={styles.card}>
+      <div className={styles.preview}>{component.renderDefault()}</div>
 
       <div className={styles.content}>
-        <div className={styles.meta}>
-          <span>{component.category}</span>
-          <span>v{component.version}</span>
-        </div>
-
         <h2>{component.name}</h2>
 
         <p>{component.description}</p>
