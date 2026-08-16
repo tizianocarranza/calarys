@@ -8,18 +8,9 @@ export default function ComponentsPage() {
 
   return (
     <main className={styles.page}>
-      <header className={styles.header}>
-        <span className={styles.eyebrow}>
-          Component registry
-        </span>
-
+{/*       <header className={styles.header}>
         <h1>Components</h1>
-
-        <p>
-          Interactive, customizable components built for modern
-          interfaces.
-        </p>
-      </header>
+      </header> */}
 
       <ComponentExplorer />
     </main>
