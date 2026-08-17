@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import Link from "next/link";
 
 import { ComponentPlayground } from "@/features/playground/components/component-playground";
 import {
@@ -6,7 +7,8 @@ import {
   getComponentDefinitions,
   isComponentId,
 } from "@/registry/component-registry";
-import Link from "next/link";
+
+import styles from "./page.module.css";
 
 type ComponentPageProps = {
   params: Promise<{
@@ -32,26 +34,27 @@ export default async function ComponentPage({ params }: ComponentPageProps) {
   const definition = componentRegistry[id];
 
   return (
-    <main>
-      <header className="component-header">
-        <Link href="/components" className="back-link">
-          ← Back to components
-        </Link>
-
-        <div className="component-heading">
+    <main className={styles.componentPage}>
+      <header className={styles.componentHeader}>
+        <div className={styles.componentHeading}>
           <div>
-            <div className="component-title-row">
+            <div className={styles.componentTitleRow}>
               <h1>{definition.name}</h1>
 
-              <span className="version">v{definition.version}</span>
+              <span className={styles.version}>
+                v{definition.version}
+              </span>
             </div>
 
             <p>{definition.description}</p>
           </div>
         </div>
 
-        <nav className="component-tabs" aria-label="Component sections">
-          <span className="active-tab">Preview</span>
+        <nav
+          className={styles.componentTabs}
+          aria-label="Component sections"
+        >
+          <span className={styles.activeTab}>Preview</span>
           <span>Code</span>
           <span>Usage</span>
         </nav>

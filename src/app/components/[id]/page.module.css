@@ -1,0 +1,145 @@
+.componentPage {
+  padding-top: 15vh;
+}
+
+.componentHeader {
+  padding: 1rem 2rem 0;
+}
+
+.backLink {
+  display: inline-block;
+
+  margin-bottom: 3.5rem;
+
+  color: var(--muted);
+  font-size: 0.75rem;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+
+  transition: color 200ms ease;
+}
+
+.backLink:hover {
+  color: var(--foreground);
+}
+
+.componentHeading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.componentTitleRow {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.componentTitleRow h1 {
+  margin: 0;
+
+  font-family: var(--font-serif);
+  font-size: clamp(3rem, 5vw, 5.5rem);
+  font-weight: 400;
+  line-height: 0.9;
+  letter-spacing: -0.05em;
+}
+
+.componentHeading p {
+  max-width: 30rem;
+  margin-block: 1.25rem 0;
+
+  color: var(--muted);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.version {
+  padding: 0.3rem 0.55rem;
+
+  color: var(--muted);
+  font-size: 0.625rem;
+  letter-spacing: 0.04em;
+
+  border: 1px solid var(--border);
+  border-radius: 999px;
+}
+
+.componentTabs {
+  display: flex;
+  gap: 2rem;
+
+  margin-top: 4rem;
+
+  font-size: 0.8125rem;
+}
+
+.componentTabs span {
+  position: relative;
+
+  padding-bottom: 1rem;
+
+  color: var(--muted);
+
+  cursor: pointer;
+
+  transition: color 200ms ease;
+}
+
+.componentTabs span:hover {
+  color: var(--foreground);
+}
+
+.activeTab {
+  color: var(--foreground) !important;
+}
+
+.activeTab::after {
+  content: "";
+
+  position: absolute;
+  right: 0;
+  bottom: -1px;
+  left: 0;
+
+  height: 1px;
+
+  background: currentColor;
+}
+
+@media (max-width: 768px) {
+  .componentPage {
+    padding-top: 8rem;
+  }
+
+  .componentHeader {
+    padding-inline: 1rem;
+  }
+
+  .backLink {
+    margin-bottom: 2.5rem;
+  }
+
+  .componentHeading {
+    display: block;
+  }
+
+  .componentTitleRow {
+    align-items: flex-start;
+  }
+
+  .componentTitleRow h1 {
+    font-size: clamp(2.75rem, 13vw, 4rem);
+  }
+
+  .componentHeading p {
+    max-width: 24rem;
+  }
+
+  .componentTabs {
+    gap: 1.5rem;
+
+    margin-top: 3rem;
+  }
+}
