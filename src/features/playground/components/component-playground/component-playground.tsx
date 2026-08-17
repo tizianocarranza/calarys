@@ -19,6 +19,16 @@ type ComponentPlaygroundProps = {
   componentId: ComponentId;
 };
 
+const controlOrder: Record<
+  PlaygroundControl<PlaygroundConfig>["type"],
+  number
+> = {
+  range: 0,
+  color: 1,
+  select: 2,
+  toggle: 3,
+};
+
 export function ComponentPlayground({ componentId }: ComponentPlaygroundProps) {
   const definition = getComponentDefinition(componentId);
 
@@ -27,6 +37,10 @@ export function ComponentPlayground({ componentId }: ComponentPlaygroundProps) {
   );
 
   const [copied, setCopied] = useState(false);
+
+  const sortedControls = [...definition.controls].sort(
+    (a, b) => controlOrder[a.type] - controlOrder[b.type],
+  );
 
   useEffect(() => {
     setConfig(definition.defaultConfig);
@@ -62,30 +76,40 @@ export function ComponentPlayground({ componentId }: ComponentPlaygroundProps) {
   return (
     <div className={styles.playground}>
       <section className={styles.preview}>
-        <div className={styles.previewGrid}>{definition.renderConfig(config)}</div>
+        <div className={styles.previewGrid}>
+          {definition.renderConfig(config)}
+        </div>
       </section>
 
-      <aside className={styles.controls}>
-        <div className={styles.controlsHeader}>
-          <span>Customize</span>
+      <section className={styles.configuration}>
+        <aside className={styles.controls}>
+          <div className={styles.controlsHeader}>
+            <span>Customize</span>
 
-          <button type="button" onClick={resetConfig}>
-            Reset
-          </button>
-        </div>
+            <button type="button" onClick={resetConfig}>
+              Reset
+            </button>
+          </div>
 
-        {definition.controls.map((control) => (
-          <ControlRenderer
-            key={control.key}
-            control={control as PlaygroundControl<PlaygroundConfig>}
-            value={config[control.key]}
-            onChange={(value) => {
-              updateConfig(control.key, value);
-            }}
-          />
-        ))}
+          <div className={styles.fields}>
+            {sortedControls.map((control) => (
+              <ControlRenderer
+                key={control.key}
+                control={control as PlaygroundControl<PlaygroundConfig>}
+                value={config[control.key]}
+                onChange={(value) => {
+                  updateConfig(control.key, value);
+                }}
+              />
+            ))}
+          </div>
+        </aside>
 
-        <div className={styles.code}>
+        <section className={styles.code}>
+          <div className={styles.codeHeader}>
+            <span>Code</span>
+          </div>
+
           <pre>
             <code>{generatedCode}</code>
           </pre>
@@ -93,8 +117,8 @@ export function ComponentPlayground({ componentId }: ComponentPlaygroundProps) {
           <button type="button" onClick={copyCode}>
             {copied ? "Copied" : "Copy code"}
           </button>
-        </div>
-      </aside>
+        </section>
+      </section>
     </div>
   );
 }

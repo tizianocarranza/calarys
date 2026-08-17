@@ -8,10 +8,6 @@ export default function ComponentsPage() {
 
   return (
     <main className={styles.page}>
-{/*       <header className={styles.header}>
-        <h1>Components</h1>
-      </header> */}
-
       <ComponentExplorer />
     </main>
   );
