@@ -1,0 +1,10 @@
+:root {
+  --calarys-shadow-component-sm:
+    rgb(17 12 46 / 14%) 0 8px 24px 0;
+
+  --calarys-shadow-component-md:
+    rgb(17 12 46 / 14%) 0 20px 50px 0;
+
+  --calarys-shadow-component-lg:
+    rgb(17 12 46 / 15%) 0 48px 100px 0;
+}
