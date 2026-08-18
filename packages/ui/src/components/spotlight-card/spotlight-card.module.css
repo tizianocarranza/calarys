@@ -40,7 +40,7 @@
 }
 
 .card[data-shadow="true"] {
-  box-shadow: var(--shadow-component-lg);
+  box-shadow: var(--calarys-shadow-component-lg);
 }
 
 .content {

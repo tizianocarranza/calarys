@@ -14,13 +14,4 @@
     --text-display-xl: clamp(5rem, 2rem + 8vw, 11rem);
     --text-display-lg: clamp(4rem, 2rem + 6vw, 8rem);
     --text-display-md: clamp(3rem, 1.5rem + 4vw, 6rem);
-
-    --shadow-component-sm:
-        rgb(17 12 46 / 14%) 0 8px 24px 0;
-
-    --shadow-component-md:
-        rgb(17 12 46 / 14%) 0 20px 50px 0;
-
-    --shadow-component-lg:
-        rgb(17 12 46 / 15%) 0 48px 100px 0;
 }

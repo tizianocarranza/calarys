@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import { Instrument_Sans, Cormorant_Garamond } from "next/font/google";
 import { Navbar, Footer } from "../shared/components";
-import "@/shared/styles/globals.css"
-import "@/shared/styles/tokens.css"
+import "@calarys/ui/styles.css";
+import "@/shared/styles/globals.css";
+import "@/shared/styles/tokens.css";
 import { SmoothScrollProvider } from "../shared/providers/smooth-scroll-provider";
 
 const instrumentSans = Instrument_Sans({

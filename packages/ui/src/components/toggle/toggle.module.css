@@ -82,7 +82,7 @@
 }
 
 .toggle[data-shadow="true"] .track {
-  box-shadow: var(--shadow-component-sm);
+  box-shadow: var(--calarys-shadow-component-sm);
 }
 
 /* ---------------------------------- */
