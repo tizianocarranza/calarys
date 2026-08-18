@@ -1,6 +1,7 @@
 {
   "name": "calarys",
   "private": true,
+  "packageManager": "pnpm@10.24.0",
   "scripts": {
     "dev": "pnpm --filter @calarys/docs dev",
     "build": "pnpm --filter @calarys/docs build",
