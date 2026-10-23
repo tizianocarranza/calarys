@@ -12,6 +12,8 @@ Built with Next.js 16 (App Router), React 19, Tailwind CSS v4, CSS Modules and L
 | --- | --- |
 | `/` | Hero ("Designed with intention.") and a showcase of live components. |
 | `/components` | Explorer with text search (name, description, category, tags) and category filters. |
+| `/collections`, `/journal` | "Coming soon" placeholders. |
+| `/privacy`, `/terms` | Minimal legal pages. |
 | `/components/[id]` | Playground: live preview, generated controls, generated code with copy button. Statically generated for every registered component. |
 
 ## Structure
@@ -23,7 +25,7 @@ src/
 │   ├── explorer/     # ComponentExplorer, ExplorerSearch, ComponentCard
 │   └── playground/   # ComponentPlayground + defineComponent and control types
 ├── registry/     # one folder per component + component-registry.ts
-└── shared/       # Navbar, Footer, ComponentShowcase, providers, global styles and tokens
+└── shared/       # Navbar, Footer, ComponentShowcase, PageIntro, providers, global styles and tokens
 ```
 
 ## The component registry
