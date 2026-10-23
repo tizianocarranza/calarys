@@ -27,6 +27,76 @@ export const spotlightCardDefinition = defineComponent<SpotlightCardConfig>({
 
   tags: ["cursor", "spotlight", "marble", "interaction"],
 
+  exportName: "SpotlightCard",
+
+  props: [
+    {
+      name: "children",
+      type: "ReactNode",
+      description: "Card content (required).",
+    },
+    {
+      name: "radius",
+      type: "number",
+      defaultValue: "200",
+      description: "Spotlight radius in px.",
+    },
+    {
+      name: "intensity",
+      type: "number",
+      defaultValue: "0.65",
+      description: "Spotlight opacity (0–1).",
+    },
+    {
+      name: "spotlightColor",
+      type: "string",
+      defaultValue: '"#ffffff"',
+      description: "Spotlight color.",
+    },
+    {
+      name: "backgroundColor",
+      type: "string",
+      defaultValue: '"#e9e7e2"',
+      description: "Card background.",
+    },
+    {
+      name: "textColor",
+      type: "string",
+      defaultValue: '"#181714"',
+      description: "Text color.",
+    },
+    {
+      name: "border",
+      type: "boolean",
+      defaultValue: "true",
+      description: "Show a 1px border.",
+    },
+    {
+      name: "borderColor",
+      type: "string",
+      defaultValue: '"rgba(0, 0, 0, 0.12)"',
+      description: "Border color.",
+    },
+    {
+      name: "shadow",
+      type: "boolean",
+      defaultValue: "false",
+      description: "Apply the large component shadow token.",
+    },
+    {
+      name: "padding",
+      type: "number",
+      defaultValue: "32",
+      description: "Inner padding in px.",
+    },
+    {
+      name: "cornerRadius",
+      type: "number",
+      defaultValue: "24",
+      description: "Border radius in px.",
+    },
+  ],
+
   defaultConfig: {
     radius: 200,
     intensity: 0.65,

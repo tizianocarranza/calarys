@@ -25,6 +25,63 @@ export const toggleDefinition = defineComponent<ToggleConfig>({
 
   tags: ["toggle", "switch", "interaction", "form"],
 
+  exportName: "Toggle",
+
+  props: [
+    {
+      name: "checked",
+      type: "boolean",
+      description: "Controlled state.",
+    },
+    {
+      name: "defaultChecked",
+      type: "boolean",
+      defaultValue: "false",
+      description: "Initial state when uncontrolled.",
+    },
+    {
+      name: "onChange",
+      type: "(checked: boolean) => void",
+      description: "Called with the next state.",
+    },
+    {
+      name: "disabled",
+      type: "boolean",
+      defaultValue: "false",
+      description: "Disables interaction.",
+    },
+    {
+      name: "activeColor",
+      type: "string",
+      defaultValue: '"#181714"',
+      description: "Track color when on.",
+    },
+    {
+      name: "inactiveColor",
+      type: "string",
+      defaultValue: '"#d8d6d1"',
+      description: "Track color when off.",
+    },
+    {
+      name: "thumbColor",
+      type: "string",
+      defaultValue: '"#ffffff"',
+      description: "Thumb color.",
+    },
+    {
+      name: "shadow",
+      type: "boolean",
+      defaultValue: "false",
+      description: "Apply the small component shadow token to the track.",
+    },
+    {
+      name: "size",
+      type: '"sm" | "md" | "lg"',
+      defaultValue: '"md"',
+      description: "Switch size.",
+    },
+  ],
+
   defaultConfig: {
     disabled: false,
     activeColor: "#181714",

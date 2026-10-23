@@ -1,5 +1,11 @@
 import { notFound } from "next/navigation";
 
+import {
+  ComponentSource,
+  ComponentTabs,
+  ComponentUsage,
+  getComponentSource,
+} from "../../../features/component-docs";
 import { ComponentPlayground } from "../../../features/playground/components/component-playground";
 import {
   componentRegistry,
@@ -31,6 +37,7 @@ export default async function ComponentPage({ params }: ComponentPageProps) {
   }
 
   const definition = componentRegistry[id];
+  const sourceFiles = await getComponentSource(id);
 
   return (
     <main className={styles.componentPage}>
@@ -48,18 +55,14 @@ export default async function ComponentPage({ params }: ComponentPageProps) {
             <p>{definition.description}</p>
           </div>
         </div>
-
-        <nav
-          className={styles.componentTabs}
-          aria-label="Component sections"
-        >
-          <span className={styles.activeTab}>Preview</span>
-          <span>Code</span>
-          <span>Usage</span>
-        </nav>
       </header>
 
-      <ComponentPlayground key={id} componentId={id} />
+      <ComponentTabs
+        key={id}
+        preview={<ComponentPlayground componentId={id} />}
+        code={<ComponentSource files={sourceFiles} />}
+        usage={<ComponentUsage definition={definition} />}
+      />
     </main>
   );
 }

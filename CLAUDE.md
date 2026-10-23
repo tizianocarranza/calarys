@@ -67,8 +67,9 @@ src/
 │   ├── collections/, journal/, privacy/, terms/  # simple PageIntro pages
 │   └── components/
 │       ├── page.tsx           # explorer: list + search + category filter
-│       └── [id]/page.tsx      # playground page (generateStaticParams, dynamicParams = false)
+│       └── [id]/page.tsx      # Preview / Code / Usage tabs (generateStaticParams, dynamicParams = false)
 ├── features/
+│   ├── component-docs/        # ComponentTabs (client), ComponentSource, ComponentUsage, getComponentSource (reads packages/ui at build)
 │   ├── explorer/              # ComponentExplorer, ExplorerSearch (client), ComponentCard, utils (toExplorerItems, matchesSearch)
 │   ├── playground/            # ComponentPlayground (client) + types/playground.ts (defineComponent, control types)
 │   └── search/                # CommandPalette (⌘K / Ctrl+K native <dialog>) + useShortcutLabel
@@ -76,14 +77,14 @@ src/
 │   ├── component-registry.ts  # id → definition map, ComponentId type, helpers
 │   └── <kebab-name>/          # definition.tsx (+ optional <name>-demo.tsx wrapper) + index.ts
 └── shared/
-    ├── components/            # Navbar, Footer, ComponentShowcase, PageIntro
+    ├── components/            # Navbar, Footer, ComponentShowcase, PageIntro, CodeBlock
     ├── providers/             # SmoothScrollProvider (Lenis)
     └── styles/                # globals.css, tokens.css (Tailwind v4 @theme + site colors)
 ```
 
-Data flow: `component-registry.ts` is the single source of truth. `/components` lists `getComponentDefinitions()`; `/components/[id]` validates the id with `isComponentId`, and `ComponentPlayground` holds the config state, renders form controls from `definition.controls`, previews via `definition.renderConfig(config)` and shows `definition.generateCodeFromConfig(config)`.
+Data flow: `component-registry.ts` is the single source of truth. `/components` lists `getComponentDefinitions()`; `/components/[id]` validates the id with `isComponentId`, and renders `ComponentTabs`: **Preview** is `ComponentPlayground` (holds the config state, renders form controls from `definition.controls`, previews via `definition.renderConfig(config)` and shows `definition.generateCodeFromConfig(config)`), **Code** shows the files of `packages/ui/src/components/<id>/` read with `getComponentSource(id)` at build time, and **Usage** shows the import, the default example and the `props` table.
 
-`defineComponent<TConfig>()` (in `features/playground/types/playground.ts`) takes `{ id, name, description, version, category, tags, defaultConfig, controls, render, generateCode }`. Control types: `range` (min/max/step/suffix), `color`, `toggle`, `select` (options). `TConfig` values must be `string | number | boolean`. Categories: `buttons | cards | controls | navigation | text | effects`.
+`defineComponent<TConfig>()` (in `features/playground/types/playground.ts`) takes `{ id, name, exportName, description, version, category, tags, props, defaultConfig, controls, render, generateCode }` (`props` is the documentation table shown in the Usage tab). Control types: `range` (min/max/step/suffix), `color`, `toggle`, `select` (options). `TConfig` values must be `string | number | boolean`. Categories: `buttons | cards | controls | navigation | text | effects`.
 
 The root layout passes `toExplorerItems(getComponentDefinitions())` to `Navbar`, which renders the `CommandPalette`. Client components must import explorer **types/utils by path** (not the `@/features/explorer` barrel) so the registry is not pulled into the client bundle.
 
@@ -91,8 +92,8 @@ Path alias: `@/*` → `apps/docs/src/*`. Styling in the docs app mixes CSS Modul
 
 ## Adding a new component
 
-1. `packages/ui/src/components/<name>/` with `<name>.tsx`, `<name>.module.css`, `index.ts`; add `export * from "./<name>";` to `packages/ui/src/components/index.ts`.
-2. `apps/docs/src/registry/<name>/definition.tsx` using `defineComponent<Config>()`; keep `defaultConfig` in sync with the component defaults and make `generateCode` reproduce every prop.
+1. `packages/ui/src/components/<name>/` (folder name **must equal the registry id** — the Code tab reads it) with `<name>.tsx`, `<name>.module.css`, `index.ts`; add `export * from "./<name>";` to `packages/ui/src/components/index.ts`.
+2. `apps/docs/src/registry/<name>/definition.tsx` using `defineComponent<Config>()`; set `exportName`, document every prop in `props`, keep `defaultConfig` in sync with the component defaults and make `generateCode` reproduce every prop.
 3. If the preview needs content or a client boundary, add `<name>-demo.tsx` next to the definition (see `spotlight-card-demo.tsx`, `toggle-demo.tsx`).
 4. `apps/docs/src/registry/<name>/index.ts` re-exports the definition; register it in `component-registry.ts` (key must equal `id`).
 5. Optionally add it to the landing `ComponentShowcase` in `apps/docs/src/app/page.tsx`.
@@ -114,5 +115,4 @@ Path alias: `@/*` → `apps/docs/src/*`. Styling in the docs app mixes CSS Modul
 ## Known issues / placeholders
 
 - `/collections` and `/journal` are "Coming soon" placeholders built with `PageIntro`; `/privacy` and `/terms` hold minimal legal copy.
-- The "Code" / "Usage" tabs on component pages are non-functional placeholders.
 - No tests and no CI.

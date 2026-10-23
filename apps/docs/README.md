@@ -14,7 +14,7 @@ Built with Next.js 16 (App Router), React 19, Tailwind CSS v4, CSS Modules and L
 | `/components` | Explorer with text search (name, description, category, tags) and category filters. |
 | `/collections`, `/journal` | "Coming soon" placeholders. |
 | `/privacy`, `/terms` | Minimal legal pages. |
-| `/components/[id]` | Playground: live preview, generated controls, generated code with copy button. Statically generated for every registered component. |
+| `/components/[id]` | Tabs: **Preview** (live playground with controls and generated code), **Code** (component source from `@calarys/ui`), **Usage** (import, example, props table). Statically generated for every registered component. |
 
 ## Structure
 
@@ -22,6 +22,7 @@ Built with Next.js 16 (App Router), React 19, Tailwind CSS v4, CSS Modules and L
 src/
 ├── app/          # routes and root layout (fonts, Navbar, Footer, SmoothScrollProvider)
 ├── features/
+│   ├── component-docs/  # ComponentTabs, ComponentSource, ComponentUsage
 │   ├── explorer/     # ComponentExplorer, ExplorerSearch, ComponentCard
 │   ├── playground/   # ComponentPlayground + defineComponent and control types
 │   └── search/       # CommandPalette (⌘K / Ctrl+K) searching components and pages
@@ -33,7 +34,8 @@ src/
 
 `src/registry/component-registry.ts` maps each component id to a definition created with `defineComponent<TConfig>()`:
 
-- metadata: `id`, `name`, `description`, `version`, `category`, `tags`
+- metadata: `id`, `name`, `exportName`, `description`, `version`, `category`, `tags`
+- `props`: documentation rows for the Usage tab
 - `defaultConfig`: initial playground values
 - `controls`: `range`, `color`, `toggle` or `select` inputs bound to config keys
 - `render(config)`: the live preview
