@@ -19,9 +19,18 @@ pnpm dev         # docs site on http://localhost:3000
 pnpm build       # production build of the docs site
 pnpm lint        # ESLint in every package
 pnpm typecheck   # tsc --noEmit in every package
+pnpm test        # Vitest (jsdom + Testing Library) in every package
 ```
 
-There is no test runner. Before finishing a change, run `pnpm typecheck` and `pnpm lint` (and `pnpm build` for routing/rendering changes).
+Before finishing a change, run `pnpm lint`, `pnpm typecheck` and `pnpm test` (and `pnpm build` for routing/rendering changes). CI (`.github/workflows/ci.yml`) runs all four on every PR and on pushes to `main`.
+
+### Testing
+
+- Vitest + jsdom + React Testing Library + `@testing-library/jest-dom`, configured per package (`packages/ui/vitest.config.ts`, `apps/docs/vitest.config.mts`, setup in `src/test/setup.ts`).
+- Tests live next to the code as `*.test.ts(x)`; import `describe`/`it`/`expect` from `vitest` (no globals).
+- `packages/ui`: test behavior and the prop → CSS variable / `data-*` mapping (jsdom has no layout: `getBoundingClientRect` is all zeros).
+- `apps/docs/src/registry/component-registry.test.ts` checks every registry entry (id, controls, generated code, props, source folder), so new components are covered automatically.
+- Async Server Components cannot be unit tested with Vitest; keep logic in plain functions or client components.
 
 ## Next.js version warning
 
@@ -97,7 +106,7 @@ Path alias: `@/*` → `apps/docs/src/*`. Styling in the docs app mixes CSS Modul
 3. If the preview needs content or a client boundary, add `<name>-demo.tsx` next to the definition (see `spotlight-card-demo.tsx`, `toggle-demo.tsx`).
 4. `apps/docs/src/registry/<name>/index.ts` re-exports the definition; register it in `component-registry.ts` (key must equal `id`).
 5. Optionally add it to the landing `ComponentShowcase` in `apps/docs/src/app/page.tsx`.
-6. Document the props in `packages/ui/README.md`, then run `pnpm typecheck && pnpm lint`.
+6. Document the props in `packages/ui/README.md`, then run `pnpm lint && pnpm typecheck && pnpm test` (add a `<name>.test.tsx` next to the component).
 
 ## Code style
 
@@ -115,4 +124,3 @@ Path alias: `@/*` → `apps/docs/src/*`. Styling in the docs app mixes CSS Modul
 ## Known issues / placeholders
 
 - `/collections` and `/journal` are "Coming soon" placeholders built with `PageIntro`; `/privacy` and `/terms` hold minimal legal copy.
-- No tests and no CI.

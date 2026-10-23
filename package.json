@@ -6,6 +6,7 @@
     "dev": "pnpm --filter @calarys/docs dev",
     "build": "pnpm --filter @calarys/docs build",
     "lint": "pnpm -r run lint",
-    "typecheck": "pnpm -r run typecheck"
+    "typecheck": "pnpm -r run typecheck",
+    "test": "pnpm -r run test"
   }
 }
