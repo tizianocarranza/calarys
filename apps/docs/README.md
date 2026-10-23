@@ -1,36 +1,51 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# @calarys/docs
 
-## Getting Started
+The Calarys website: a landing page, a searchable component explorer and an interactive playground for every component in [`@calarys/ui`](../../packages/ui).
 
-First, run the development server:
+Built with Next.js 16 (App Router), React 19, Tailwind CSS v4, CSS Modules and Lenis smooth scrolling.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+> This app uses Next.js 16, which has breaking changes compared to earlier versions. Read the relevant guide in `node_modules/next/dist/docs/` before using Next.js APIs (see [`AGENTS.md`](AGENTS.md)).
+
+## Routes
+
+| Route | Description |
+| --- | --- |
+| `/` | Hero ("Designed with intention.") and a showcase of live components. |
+| `/components` | Explorer with text search (name, description, category, tags) and category filters. |
+| `/components/[id]` | Playground: live preview, generated controls, generated code with copy button. Statically generated for every registered component. |
+
+## Structure
+
+```
+src/
+├── app/          # routes and root layout (fonts, Navbar, Footer, SmoothScrollProvider)
+├── features/
+│   ├── explorer/     # ComponentExplorer, ExplorerSearch, ComponentCard
+│   └── playground/   # ComponentPlayground + defineComponent and control types
+├── registry/     # one folder per component + component-registry.ts
+└── shared/       # Navbar, Footer, ComponentShowcase, providers, global styles and tokens
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## The component registry
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+`src/registry/component-registry.ts` maps each component id to a definition created with `defineComponent<TConfig>()`:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- metadata: `id`, `name`, `description`, `version`, `category`, `tags`
+- `defaultConfig`: initial playground values
+- `controls`: `range`, `color`, `toggle` or `select` inputs bound to config keys
+- `render(config)`: the live preview
+- `generateCode(config)`: the JSX snippet shown in the playground
 
-## Learn More
+Both the explorer and the playground pages read from this registry, so registering a definition is all that is needed to publish a new component. See [`CONTRIBUTING.md`](../../CONTRIBUTING.md) for the full walkthrough.
 
-To learn more about Next.js, take a look at the following resources:
+## Scripts
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Run from the repo root (`pnpm dev`, `pnpm build`, `pnpm lint`) or inside this folder:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+pnpm dev         # next dev
+pnpm build       # next build
+pnpm start       # next start
+pnpm lint        # eslint
+pnpm typecheck   # tsc --noEmit
+```
