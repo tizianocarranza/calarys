@@ -6,12 +6,12 @@ import {
   ComponentUsage,
   getComponentSource,
 } from "../../../features/component-docs";
-import { ComponentPlayground } from "../../../features/playground/components/component-playground";
 import {
   componentRegistry,
   getComponentDefinitions,
   isComponentId,
 } from "../../../registry/component-registry";
+import { ComponentPlaygroundLoader } from "../../../registry/component-playgrounds";
 
 import styles from "./page.module.css";
 
@@ -59,7 +59,7 @@ export default async function ComponentPage({ params }: ComponentPageProps) {
 
       <ComponentTabs
         key={id}
-        preview={<ComponentPlayground componentId={id} />}
+        preview={<ComponentPlaygroundLoader componentId={id} />}
         code={<ComponentSource files={sourceFiles} />}
         usage={<ComponentUsage definition={definition} />}
       />

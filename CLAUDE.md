@@ -75,6 +75,7 @@ src/
 │   └── search/                # CommandPalette (⌘K / Ctrl+K native <dialog>) + useShortcutLabel
 ├── registry/
 │   ├── component-registry.ts  # id → definition map, ComponentId type, helpers
+│   ├── component-playgrounds.tsx # client: id → lazy (next/dynamic) <name>-playground
 │   └── <kebab-name>/          # definition.tsx (+ optional <name>-demo.tsx wrapper) + index.ts
 └── shared/
     ├── components/            # Navbar, Footer, ComponentShowcase, PageIntro, CodeBlock
@@ -82,7 +83,7 @@ src/
     └── styles/                # globals.css, tokens.css (Tailwind v4 @theme + site colors)
 ```
 
-Data flow: `component-registry.ts` is the single source of truth. `/components` lists `getComponentDefinitions()`; `/components/[id]` validates the id with `isComponentId`, and renders `ComponentTabs`: **Preview** is `ComponentPlayground` (holds the config state, renders form controls from `definition.controls`, previews via `definition.renderConfig(config)` and shows `definition.generateCodeFromConfig(config)`), **Code** shows the files of `packages/ui/src/components/<id>/` read with `getComponentSource(id)` at build time, and **Usage** shows the import, the default example and the `props` table.
+Data flow: `component-registry.ts` is the single source of truth. `/components` lists `getComponentDefinitions()`; `/components/[id]` validates the id with `isComponentId`, and renders `ComponentTabs`: **Preview** is `ComponentPlaygroundLoader`, which lazy loads `registry/<id>/<id>-playground.tsx` so each page only ships its own definition; that file renders `ComponentPlayground` with the definition (holds the config state, renders form controls from `definition.controls`, previews via `definition.renderConfig(config)` and shows `definition.generateCodeFromConfig(config)`), **Code** shows the files of `packages/ui/src/components/<id>/` read with `getComponentSource(id)` at build time, and **Usage** shows the import, the default example and the `props` table.
 
 `defineComponent<TConfig>()` (in `features/playground/types/playground.ts`) takes `{ id, name, exportName, description, version, category, tags, props, defaultConfig, controls, render, generateCode }` (`props` is the documentation table shown in the Usage tab). Control types: `range` (min/max/step/suffix), `color`, `toggle`, `select` (options). `TConfig` values must be `string | number | boolean`. Categories: `buttons | cards | controls | navigation | text | effects`.
 
@@ -96,8 +97,9 @@ Path alias: `@/*` → `apps/docs/src/*`. Styling in the docs app mixes CSS Modul
 2. `apps/docs/src/registry/<name>/definition.tsx` using `defineComponent<Config>()`; set `exportName`, document every prop in `props`, keep `defaultConfig` in sync with the component defaults and make `generateCode` reproduce every prop.
 3. If the preview needs content or a client boundary, add `<name>-demo.tsx` next to the definition (see `spotlight-card-demo.tsx`, `toggle-demo.tsx`).
 4. `apps/docs/src/registry/<name>/index.ts` re-exports the definition; register it in `component-registry.ts` (key must equal `id`).
-5. Optionally add it to the landing `ComponentShowcase` in `apps/docs/src/app/page.tsx`.
-6. Document the props in `packages/ui/README.md`, then run `pnpm typecheck && pnpm lint`.
+5. Add `apps/docs/src/registry/<name>/<name>-playground.tsx` (`"use client"`, renders `<ComponentPlayground definition={…} />`) and a `dynamic()` entry for it in `component-playgrounds.tsx` (typed `Record<ComponentId, …>`, so a missing entry fails typecheck).
+6. Optionally add it to the landing `ComponentShowcase` in `apps/docs/src/app/page.tsx`.
+7. Document the props in `packages/ui/README.md`, then run `pnpm typecheck && pnpm lint`.
 
 ## Code style
 

@@ -2,21 +2,17 @@
 
 import { useState } from "react";
 
-import {
-  getComponentDefinition,
-  type ComponentId,
-} from "../../../../registry/component-registry";
-
 import type {
   PlaygroundConfig,
   PlaygroundControl,
+  PlaygroundDefinition,
   PlaygroundValue,
 } from "../../types/playground";
 
 import styles from "./component-playground.module.css";
 
 type ComponentPlaygroundProps = {
-  componentId: ComponentId;
+  definition: PlaygroundDefinition;
 };
 
 const controlOrder: Record<
@@ -29,9 +25,7 @@ const controlOrder: Record<
   toggle: 3,
 };
 
-export function ComponentPlayground({ componentId }: ComponentPlaygroundProps) {
-  const definition = getComponentDefinition(componentId);
-
+export function ComponentPlayground({ definition }: ComponentPlaygroundProps) {
   const [config, setConfig] = useState<PlaygroundConfig>(
     definition.defaultConfig,
   );
@@ -91,7 +85,7 @@ export function ComponentPlayground({ componentId }: ComponentPlaygroundProps) {
             {sortedControls.map((control) => (
               <ControlRenderer
                 key={control.key}
-                control={control as PlaygroundControl<PlaygroundConfig>}
+                control={control}
                 value={config[control.key]}
                 onChange={(value) => {
                   updateConfig(control.key, value);

@@ -60,6 +60,15 @@ export function defineComponent<TConfig extends PlaygroundConfig>(
   };
 }
 
+// The subset of a defined component the client playground needs, typed
+// against the generic config so any definition can be passed in.
+export type PlaygroundDefinition = {
+  defaultConfig: PlaygroundConfig;
+  controls: PlaygroundControl<PlaygroundConfig>[];
+  renderConfig: (config: PlaygroundConfig) => ReactNode;
+  generateCodeFromConfig: (config: PlaygroundConfig) => string;
+};
+
 export type ComponentCategory =
   | "buttons"
   | "cards"
