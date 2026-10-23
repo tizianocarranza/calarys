@@ -2,6 +2,8 @@
 
 import { type CSSProperties, type PointerEvent, useRef } from "react";
 
+import { useLight } from "../light-source";
+
 import styles from "./magnetic-button.module.css";
 
 export type MagneticButtonProps = {
@@ -22,6 +24,8 @@ export function MagneticButton({
   textColor = "#ffffff",
 }: MagneticButtonProps) {
   const buttonRef = useRef<HTMLButtonElement>(null);
+
+  useLight(buttonRef);
 
   function setPosition(x: number, y: number) {
     const button = buttonRef.current;

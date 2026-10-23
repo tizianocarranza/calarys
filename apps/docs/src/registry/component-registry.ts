@@ -1,8 +1,10 @@
+import { lightSourceDefinition } from "./light-source";
 import { magneticButtonDefinition } from "./magnetic-button";
 import { spotlightCardDefinition } from "./spotlight-card";
 import { toggleDefinition } from "./toggle";
 
 export const componentRegistry = {
+  "light-source": lightSourceDefinition,
   "magnetic-button": magneticButtonDefinition,
   "spotlight-card": spotlightCardDefinition,
   toggle: toggleDefinition,

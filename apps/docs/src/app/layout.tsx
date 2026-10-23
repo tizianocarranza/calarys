@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Instrument_Sans, Cormorant_Garamond } from "next/font/google";
+import { LightSource } from "@calarys/ui";
 import { Navbar, Footer } from "../shared/components";
 import "lenis/dist/lenis.css";
 import "@calarys/ui/styles.css";
@@ -35,9 +36,11 @@ export default function RootLayout({
     >
       <body className="relative w-full min-h-svh flex flex-col">
         <SmoothScrollProvider>
-          <Navbar searchItems={toExplorerItems(getComponentDefinitions())} />
-          {children}
-          <Footer />
+          <LightSource>
+            <Navbar searchItems={toExplorerItems(getComponentDefinitions())} />
+            {children}
+            <Footer />
+          </LightSource>
         </SmoothScrollProvider>
       </body>
     </html>

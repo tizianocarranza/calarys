@@ -8,3 +8,10 @@
   --calarys-shadow-component-lg:
     rgb(17 12 46 / 15%) 0 48px 100px 0;
 }
+/* Set by useLight on components inside a LightSource. Registered so it can
+   transition when the light enters or leaves. */
+@property --light-proximity {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
