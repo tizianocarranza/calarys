@@ -16,7 +16,7 @@ export function Navbar() {
     { label: "Components", href: "/components" },
     { label: "Collections", href: "/collections" },
     { label: "Journal", href: "/journal" },
-    { label: "GitHub ↗", href: "https://github.com" },
+    { label: "GitHub ↗", href: "https://github.com/tizianocarranza/calarys" },
   ];
 
   const handleMenuClick = () => {

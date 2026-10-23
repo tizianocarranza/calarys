@@ -82,6 +82,7 @@ Defined in `src/styles/styles.css` (exported as `@calarys/ui/styles.css`):
 
 ```bash
 pnpm --filter @calarys/ui typecheck
+pnpm --filter @calarys/ui lint
 ```
 
 See [`CONTRIBUTING.md`](../../CONTRIBUTING.md) for how to add a component.

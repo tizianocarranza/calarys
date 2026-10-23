@@ -17,7 +17,7 @@ Run from the repo root (pnpm only, never npm/yarn):
 pnpm install
 pnpm dev         # docs site on http://localhost:3000
 pnpm build       # production build of the docs site
-pnpm lint        # ESLint (docs app only)
+pnpm lint        # ESLint in every package
 pnpm typecheck   # tsc --noEmit in every package
 ```
 
@@ -109,8 +109,6 @@ Path alias: `@/*` → `apps/docs/src/*`. Styling in the docs app mixes CSS Modul
 
 ## Known issues / placeholders
 
-- `apps/docs/tsconfig.json` `include` lists `src/registry/spotlight-card/spotlight-card.tsx`, which no longer exists (leftover from the monorepo migration).
-- `packages/ui` has a `lint` script but no ESLint config or dependency; root `pnpm lint` only lints the docs app.
-- Navbar links `/collections` and `/journal`, footer links `/privacy` and `/terms` have no pages yet; the GitHub link points to `https://github.com`.
+- Navbar links `/collections` and `/journal`, footer links `/privacy` and `/terms` have no pages yet.
 - The Navbar "Search ⌘K" button and the "Code" / "Usage" tabs on component pages are non-functional placeholders.
 - No tests and no CI.

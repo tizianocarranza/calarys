@@ -48,7 +48,7 @@ pnpm dev          # start the docs site at http://localhost:3000
 | --- | --- |
 | `pnpm dev` | Runs the docs site in development mode. |
 | `pnpm build` | Builds the docs site for production. |
-| `pnpm lint` | Lints the docs site with ESLint. |
+| `pnpm lint` | Lints every workspace package with ESLint. |
 | `pnpm typecheck` | Type-checks every workspace package. |
 
 ## Using `@calarys/ui`
