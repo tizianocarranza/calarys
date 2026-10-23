@@ -108,10 +108,53 @@
 }
 
 /* ---------------------------------- */
+/* Lit by a LightSource               */
+/* ---------------------------------- */
+
+.toggle[data-lit="true"] {
+  transition: --light-proximity 200ms ease;
+}
+
+/* The track is a groove: the wall nearest the light shades it. */
+.toggle[data-lit="true"] .track {
+  --toggle-groove-shadow: inset calc(var(--light-nx, 0) * -2px)
+    calc(var(--light-ny, -1) * -2px) 4px rgb(0 0 0 / 14%);
+
+  box-shadow: var(--toggle-groove-shadow);
+}
+
+.toggle[data-lit="true"][data-shadow="true"] .track {
+  box-shadow:
+    var(--toggle-groove-shadow),
+    var(--calarys-shadow-component-sm);
+}
+
+/* The thumb is a polished bead: a highlight toward the light and a shadow
+   away from it. */
+.toggle[data-lit="true"] .thumb {
+  background: radial-gradient(
+    circle at calc(50% + var(--light-nx, 0) * 30%)
+      calc(50% + var(--light-ny, -1) * 30%),
+    color-mix(
+      in srgb,
+      var(--calarys-light-color, #ffffff)
+        min(calc(var(--light-proximity) * var(--calarys-light-intensity, 0.6) * 160%), 100%),
+      var(--thumb-color)
+    ),
+    var(--thumb-color) 45%,
+    color-mix(in srgb, var(--thumb-color) 82%, #000000) 100%
+  );
+
+  box-shadow: calc(var(--light-nx, 0) * -2px)
+    calc(var(--light-ny, -1) * -2px + 1px) 4px rgb(0 0 0 / 22%);
+}
+
+/* ---------------------------------- */
 /* Reduced motion                     */
 /* ---------------------------------- */
 
 @media (prefers-reduced-motion: reduce) {
+  .toggle,
   .track,
   .thumb {
     transition: none;

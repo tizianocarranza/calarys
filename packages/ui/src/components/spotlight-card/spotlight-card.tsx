@@ -8,6 +8,8 @@ import {
   useRef,
 } from "react";
 
+import { useLight } from "../light-source";
+
 import styles from "./spotlight-card.module.css";
 
 export type SpotlightCardProps = {
@@ -40,6 +42,8 @@ export function SpotlightCard({
   const cardRef = useRef<HTMLDivElement>(null);
   const frameRef = useRef<number | null>(null);
 
+  useLight(cardRef);
+
   function updatePointerPosition(x: number, y: number) {
     const card = cardRef.current;
 
@@ -52,7 +56,8 @@ export function SpotlightCard({
   function handlePointerMove(event: PointerEvent<HTMLDivElement>) {
     const card = cardRef.current;
 
-    if (!card) return;
+    // Inside a LightSource the spotlight follows the shared light instead.
+    if (!card || card.dataset.lit === "true") return;
 
     const rect = card.getBoundingClientRect();
 

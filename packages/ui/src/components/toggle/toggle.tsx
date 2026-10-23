@@ -3,8 +3,11 @@
 import {
   type CSSProperties,
   type ChangeEvent,
+  useRef,
   useState,
 } from "react";
+
+import { useLight } from "../light-source";
 
 import styles from "./toggle.module.css";
 
@@ -34,6 +37,10 @@ export function Toggle({
   shadow = false,
   size = "md",
 }: ToggleProps) {
+  const toggleRef = useRef<HTMLLabelElement>(null);
+
+  useLight(toggleRef);
+
   const [internalChecked, setInternalChecked] =
     useState(defaultChecked);
 
@@ -58,6 +65,7 @@ export function Toggle({
 
   return (
     <label
+      ref={toggleRef}
       className={styles.toggle}
       data-size={size}
       data-disabled={disabled}

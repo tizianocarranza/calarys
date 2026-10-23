@@ -14,12 +14,33 @@ Import the shared tokens once (e.g. in your root layout), then the components:
 
 ```tsx
 import "@calarys/ui/styles.css";
-import { MagneticButton, SpotlightCard, Toggle } from "@calarys/ui";
+import { LightSource, MagneticButton, SpotlightCard, Toggle } from "@calarys/ui";
 ```
 
 All components are client components (`"use client"`).
 
 ## Components
+
+### `LightSource`
+
+One light for the whole page. Wrap your app (or a section) in it and every Calarys component inside shades itself from the same pointer-driven light: the Magnetic Button gets a specular highlight and a rim, the Spotlight Card's glow and rim follow the light (nearby cards catch its spill) and its shadow falls away from it, and the Toggle's thumb and groove are shaded from its direction. Outside a `LightSource` the components behave as before.
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `children` | `ReactNode` | — | Content to light (required). |
+| `color` | `string` | `"#ffffff"` | Light color used for highlights and rims. |
+| `intensity` | `number` | `0.6` | Highlight strength (0–1). |
+| `reach` | `number` | `480` | Distance in px from a component's edge at which the light fades out. |
+
+To light your own components, call `useLight(ref)` on an element. Inside a `LightSource` it sets `data-lit="true"` on it and keeps these CSS variables up to date (one layout read per frame for all lit elements):
+
+| Variable | Value |
+| --- | --- |
+| `--light-x`, `--light-y` | Light position relative to the element, in px. |
+| `--light-nx`, `--light-ny` | Unit vector from the element's center toward the light. |
+| `--light-proximity` | `0`–`1`; `1` while the light is over the element, `0` when it is out of reach or off the window. |
+
+The source also sets `--calarys-light-color` and `--calarys-light-intensity` for its subtree.
 
 ### `MagneticButton`
 
@@ -77,6 +98,8 @@ Defined in `src/styles/styles.css` (exported as `@calarys/ui/styles.css`):
 | `--calarys-shadow-component-sm` | Small elevation (e.g. toggle track). |
 | `--calarys-shadow-component-md` | Medium elevation. |
 | `--calarys-shadow-component-lg` | Large elevation (e.g. spotlight card). |
+
+`styles.css` also registers `--light-proximity` with `@property`, so lit components can transition it.
 
 ## Scripts
 

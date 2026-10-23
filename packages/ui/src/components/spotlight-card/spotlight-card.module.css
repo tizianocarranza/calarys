@@ -47,3 +47,67 @@
   position: relative;
   z-index: 1;
 }
+
+/* ---------------------------------- */
+/* Lit by a LightSource               */
+/* ---------------------------------- */
+
+/* The spotlight follows the shared light, so nearby cards catch its spill
+   even when the pointer is not over them. */
+.card[data-lit="true"] {
+  background:
+    radial-gradient(circle var(--spotlight-radius) at var(--light-x, 50%) var(--light-y, -50%),
+      color-mix(in srgb,
+        var(--spotlight-color) calc(var(--spotlight-intensity) * var(--light-proximity) * 100%),
+        transparent),
+      transparent 70%),
+    var(--card-background);
+
+  transition:
+    --light-proximity 200ms ease,
+    box-shadow 200ms ease;
+}
+
+/* Rim light on the edge facing the light. */
+.card[data-lit="true"]::before {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+
+  padding: 1px;
+
+  content: "";
+
+  background: radial-gradient(
+    circle calc(var(--spotlight-radius) * 1.5) at var(--light-x, 50%) var(--light-y, -50%),
+    color-mix(
+      in srgb,
+      var(--calarys-light-color, #ffffff)
+        calc(var(--light-proximity) * var(--calarys-light-intensity, 0.6) * 100%),
+      transparent
+    ),
+    transparent 70%
+  );
+  border-radius: inherit;
+
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
+
+  pointer-events: none;
+}
+
+/* The shadow falls away from the light. */
+.card[data-lit="true"][data-shadow="true"] {
+  box-shadow:
+    calc(var(--light-nx, 0) * -2rem) calc(var(--light-ny, -1) * -2rem + 1rem)
+    5rem rgb(17 12 46 / 16%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .card[data-lit="true"] {
+    transition: none;
+  }
+}
