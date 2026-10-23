@@ -97,6 +97,8 @@ Data flow: `component-registry.ts` is the single source of truth. `/components` 
 
 The root layout passes `toExplorerItems(getComponentDefinitions())` to `Navbar`, which renders the `CommandPalette`. Client components must import explorer **types/utils by path** (not the `@/features/explorer` barrel) so the registry is not pulled into the client bundle.
 
+Smooth scrolling uses Lenis (`SmoothScrollProvider`). Lenis recomputes its scroll limit only when a `ResizeObserver` on `<html>` fires, so the layout imports `lenis/dist/lenis.css` and `<html>` must never get a fixed height (no `h-full` / `height: 100%`) — otherwise the limit goes stale and scrolling gets stuck. Scrollable areas inside the page (lists, code blocks, tables) need `data-lenis-prevent` (or a directional variant) to scroll natively.
+
 Path alias: `@/*` → `apps/docs/src/*`. Styling in the docs app mixes CSS Modules (most components) with Tailwind utilities (layout).
 
 ## Adding a new component
