@@ -64,6 +64,7 @@ src/
 ├── app/                       # routes (App Router)
 │   ├── layout.tsx             # fonts (Instrument Sans, Cormorant Garamond), Navbar, Footer, SmoothScrollProvider, global CSS
 │   ├── page.tsx               # landing: hero + ComponentShowcase
+│   ├── collections/, journal/, privacy/, terms/  # simple PageIntro pages
 │   └── components/
 │       ├── page.tsx           # explorer: list + search + category filter
 │       └── [id]/page.tsx      # playground page (generateStaticParams, dynamicParams = false)
@@ -74,7 +75,7 @@ src/
 │   ├── component-registry.ts  # id → definition map, ComponentId type, helpers
 │   └── <kebab-name>/          # definition.tsx (+ optional <name>-demo.tsx wrapper) + index.ts
 └── shared/
-    ├── components/            # Navbar, Footer, ComponentShowcase
+    ├── components/            # Navbar, Footer, ComponentShowcase, PageIntro
     ├── providers/             # SmoothScrollProvider (Lenis)
     └── styles/                # globals.css, tokens.css (Tailwind v4 @theme + site colors)
 ```
@@ -109,6 +110,6 @@ Path alias: `@/*` → `apps/docs/src/*`. Styling in the docs app mixes CSS Modul
 
 ## Known issues / placeholders
 
-- Navbar links `/collections` and `/journal`, footer links `/privacy` and `/terms` have no pages yet.
+- `/collections` and `/journal` are "Coming soon" placeholders built with `PageIntro`; `/privacy` and `/terms` hold minimal legal copy.
 - The Navbar "Search ⌘K" button and the "Code" / "Usage" tabs on component pages are non-functional placeholders.
 - No tests and no CI.
