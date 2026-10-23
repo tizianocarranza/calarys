@@ -137,7 +137,7 @@ export const myComponentDefinition = defineComponent<MyComponentConfig>({
 - Categories: `buttons`, `cards`, `controls`, `navigation`, `text`, `effects`.
 - If the preview needs sample content, add a `<name>-demo.tsx` wrapper next to the definition (see `spotlight-card-demo.tsx`).
 
-Add `apps/docs/src/registry/<name>/index.ts` re-exporting the definition and register it in `apps/docs/src/registry/component-registry.ts` (the key must match `id`). The explorer and the `/components/<id>` page pick it up automatically.
+Add `apps/docs/src/registry/<name>/index.ts` re-exporting the definition and register it in `apps/docs/src/registry/component-registry.ts` (the key must match `id`). Then add `<name>-playground.tsx` next to the definition (a `"use client"` file that renders `<ComponentPlayground definition={…} />`) and a lazy `dynamic()` entry for it in `apps/docs/src/registry/component-playgrounds.tsx`. The explorer and the `/components/<id>` page pick it up automatically.
 
 ### 3. Finish up
 
