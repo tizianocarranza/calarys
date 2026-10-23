@@ -5,6 +5,8 @@ import "@calarys/ui/styles.css";
 import "@/shared/styles/globals.css";
 import "@/shared/styles/tokens.css";
 import { SmoothScrollProvider } from "../shared/providers/smooth-scroll-provider";
+import { toExplorerItems } from "@/features/explorer";
+import { getComponentDefinitions } from "@/registry/component-registry";
 
 const instrumentSans = Instrument_Sans({
   subsets: ["latin"],
@@ -32,7 +34,7 @@ export default function RootLayout({
     >
       <body className="relative w-full min-h-full flex flex-col">
         <SmoothScrollProvider>
-          <Navbar />
+          <Navbar searchItems={toExplorerItems(getComponentDefinitions())} />
           {children}
           <Footer />
         </SmoothScrollProvider>

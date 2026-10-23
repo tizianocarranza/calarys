@@ -1,5 +1,5 @@
 import type { ComponentDefinitions } from "@/registry/component-registry";
-import type { ExplorerItem } from "../../types/explorer";
+import { toExplorerItems } from "../../utils/explorer-items";
 import { ComponentCard } from "../component-card";
 import { ExplorerSearch } from "../explorer-search";
 
@@ -8,15 +8,7 @@ type ComponentExplorerProps = {
 };
 
 export function ComponentExplorer({ components }: ComponentExplorerProps) {
-  const items: ExplorerItem[] = components.map(
-    (component) => ({
-      id: component.id,
-      name: component.name,
-      description: component.description,
-      category: component.category,
-      tags: component.tags,
-    }),
-  );
+  const items = toExplorerItems(components);
 
   return (
     <ExplorerSearch items={items}>

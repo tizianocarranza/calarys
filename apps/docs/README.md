@@ -23,7 +23,8 @@ src/
 ├── app/          # routes and root layout (fonts, Navbar, Footer, SmoothScrollProvider)
 ├── features/
 │   ├── explorer/     # ComponentExplorer, ExplorerSearch, ComponentCard
-│   └── playground/   # ComponentPlayground + defineComponent and control types
+│   ├── playground/   # ComponentPlayground + defineComponent and control types
+│   └── search/       # CommandPalette (⌘K / Ctrl+K) searching components and pages
 ├── registry/     # one folder per component + component-registry.ts
 └── shared/       # Navbar, Footer, ComponentShowcase, PageIntro, providers, global styles and tokens
 ```
