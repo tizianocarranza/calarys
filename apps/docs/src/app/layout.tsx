@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Instrument_Sans, Cormorant_Garamond } from "next/font/google";
 import { Navbar, Footer } from "../shared/components";
+import "lenis/dist/lenis.css";
 import "@calarys/ui/styles.css";
 import "@/shared/styles/globals.css";
 import "@/shared/styles/tokens.css";
@@ -30,9 +31,9 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${instrumentSans.variable} ${cormorantGaramond.variable} h-full antialiased`}
+      className={`${instrumentSans.variable} ${cormorantGaramond.variable} antialiased`}
     >
-      <body className="relative w-full min-h-full flex flex-col">
+      <body className="relative w-full min-h-svh flex flex-col">
         <SmoothScrollProvider>
           <Navbar searchItems={toExplorerItems(getComponentDefinitions())} />
           {children}
