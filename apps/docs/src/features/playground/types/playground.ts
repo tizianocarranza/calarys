@@ -68,14 +68,24 @@ export type ComponentCategory =
   | "text"
   | "effects";
 
+export type ComponentPropDoc = {
+  name: string;
+  type: string;
+  defaultValue?: string;
+  description: string;
+};
+
 export type ComponentDefinition<TConfig extends PlaygroundConfig> = {
   id: string;
   name: string;
+  exportName: string;
   description: string;
   version: string;
 
   category: ComponentCategory;
   tags: string[];
+
+  props: ComponentPropDoc[];
 
   defaultConfig: TConfig;
   controls: PlaygroundControl<TConfig>[];

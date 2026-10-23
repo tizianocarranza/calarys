@@ -66,48 +66,6 @@
   border-radius: 999px;
 }
 
-.componentTabs {
-  display: flex;
-  gap: 2rem;
-
-  margin-top: 4rem;
-
-  font-size: 0.8125rem;
-}
-
-.componentTabs span {
-  position: relative;
-
-  padding-bottom: 1rem;
-
-  color: var(--muted);
-
-  cursor: pointer;
-
-  transition: color 200ms ease;
-}
-
-.componentTabs span:hover {
-  color: var(--foreground);
-}
-
-.activeTab {
-  color: var(--foreground) !important;
-}
-
-.activeTab::after {
-  content: "";
-
-  position: absolute;
-  right: 0;
-  bottom: -1px;
-  left: 0;
-
-  height: 1px;
-
-  background: currentColor;
-}
-
 @media (max-width: 768px) {
   .componentPage {
     padding-top: 8rem;
@@ -135,11 +93,5 @@
 
   .componentHeading p {
     max-width: 24rem;
-  }
-
-  .componentTabs {
-    gap: 1.5rem;
-
-    margin-top: 3rem;
   }
 }

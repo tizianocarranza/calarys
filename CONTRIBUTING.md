@@ -26,7 +26,7 @@ A component lives in two places: the implementation in `packages/ui` and its pla
 
 ### 1. Implement it in `@calarys/ui`
 
-Create `packages/ui/src/components/<name>/`:
+Create `packages/ui/src/components/<name>/` (the folder name must match the registry `id`, because the docs **Code** tab reads the source from it):
 
 ```
 <name>/
@@ -89,6 +89,23 @@ export const myComponentDefinition = defineComponent<MyComponentConfig>({
   version: "0.1.0",
   category: "effects",
   tags: ["interaction"],
+  exportName: "MyComponent",
+
+  // Documentation shown in the Usage tab
+  props: [
+    {
+      name: "accentColor",
+      type: "string",
+      defaultValue: '"#181714"',
+      description: "Accent color.",
+    },
+    {
+      name: "size",
+      type: '"sm" | "md" | "lg"',
+      defaultValue: '"md"',
+      description: "Component size.",
+    },
+  ],
 
   defaultConfig: { accentColor: "#181714", size: "md" },
 

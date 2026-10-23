@@ -1,0 +1,23 @@
+.source {
+  display: grid;
+  gap: 2rem;
+
+  padding: 2.5rem 2rem 4rem;
+
+  border-top: 1px solid var(--border);
+}
+
+.intro {
+  max-width: 34rem;
+  margin: 0;
+
+  color: var(--muted);
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+@media (max-width: 700px) {
+  .source {
+    padding: 2rem 1rem 3rem;
+  }
+}

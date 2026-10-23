@@ -1,0 +1,53 @@
+.block {
+  min-width: 0;
+  margin: 0;
+
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+
+  overflow: hidden;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+
+  padding: 0.85rem 1.25rem;
+
+  font-size: 0.75rem;
+
+  border-bottom: 1px solid var(--border);
+}
+
+.header button {
+  padding: 0;
+
+  color: var(--muted);
+  font: inherit;
+
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid currentColor;
+
+  cursor: pointer;
+
+  transition: color 200ms ease;
+}
+
+.header button:hover {
+  color: var(--foreground);
+}
+
+.block pre {
+  margin: 0;
+  padding: 1.25rem;
+
+  overflow-x: auto;
+
+  font-size: 0.75rem;
+  line-height: 1.7;
+
+  background: #fafafa;
+}
