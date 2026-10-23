@@ -4,13 +4,23 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 
+import type { ExplorerItem } from "@/features/explorer/types/explorer";
+import { CommandPalette, useShortcutLabel } from "@/features/search";
+
 import styles from "./navbar.module.css";
 
-export function Navbar() {
+type NavbarProps = {
+  searchItems: ExplorerItem[];
+};
+
+export function Navbar({ searchItems }: NavbarProps) {
   const pathname = usePathname();
   const isLanding = pathname === "/";
 
   const [menuOpen, setMenuOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
+
+  const shortcutLabel = useShortcutLabel();
 
   const links = [
     { label: "Components", href: "/components" },
@@ -46,10 +56,23 @@ export function Navbar() {
           ))}
         </div>
 
-        <button className={styles.search} type="button">
+        <button
+          className={styles.search}
+          type="button"
+          aria-haspopup="dialog"
+          onClick={() => {
+            setSearchOpen(true);
+          }}
+        >
           <span>Search</span>
-          <kbd className={styles.kbd}>⌘K</kbd>
+          <kbd className={styles.kbd}>{shortcutLabel}</kbd>
         </button>
+
+        <CommandPalette
+          items={searchItems}
+          open={searchOpen}
+          onOpenChange={setSearchOpen}
+        />
 
         <button
           className={styles.menuButton}

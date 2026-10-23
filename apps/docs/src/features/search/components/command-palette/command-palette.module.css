@@ -1,0 +1,148 @@
+.dialog {
+  width: min(36rem, calc(100% - 2rem));
+  max-height: min(32rem, 70vh);
+  margin: 16vh auto auto;
+  padding: 0;
+
+  color: var(--foreground);
+
+  background: var(--background);
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  box-shadow: var(--calarys-shadow-component-lg);
+}
+
+.dialog::backdrop {
+  background: rgb(17 17 17 / 18%);
+  backdrop-filter: blur(4px);
+}
+
+.dialog[open] {
+  animation: palette-in 220ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+
+  max-height: inherit;
+}
+
+.input {
+  width: 100%;
+  padding: 1.25rem 1.5rem;
+
+  color: inherit;
+  font: inherit;
+  font-size: 1rem;
+
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--border);
+  outline: none;
+}
+
+.input::placeholder {
+  color: currentColor;
+  opacity: 0.4;
+}
+
+.results {
+  flex: 1;
+
+  margin: 0;
+  padding: 0.5rem;
+
+  overflow-y: auto;
+  overscroll-behavior: contain;
+
+  list-style: none;
+}
+
+.group {
+  display: block;
+
+  padding: 0.75rem 1rem 0.5rem;
+
+  color: var(--muted);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.result {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+
+  padding: 0.75rem 1rem;
+
+  font-size: 0.9rem;
+
+  border-radius: 0.6rem;
+
+  cursor: pointer;
+}
+
+.result[aria-selected="true"] {
+  background: rgb(17 17 17 / 6%);
+}
+
+.hint {
+  color: var(--muted);
+  font-size: 0.75rem;
+  text-transform: capitalize;
+}
+
+.empty {
+  margin: 0;
+  padding: 2rem 1.5rem;
+
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.footer {
+  display: flex;
+  gap: 1.25rem;
+
+  padding: 0.75rem 1.5rem;
+
+  color: var(--muted);
+  font-size: 0.6875rem;
+  letter-spacing: 0.04em;
+
+  border-top: 1px solid var(--border);
+}
+
+@keyframes palette-in {
+  from {
+    opacity: 0;
+    translate: 0 -0.5rem;
+    scale: 0.98;
+  }
+
+  to {
+    opacity: 1;
+    translate: 0 0;
+    scale: 1;
+  }
+}
+
+@media (max-width: 768px) {
+  .dialog {
+    margin-top: 6rem;
+  }
+
+  .footer {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dialog[open] {
+    animation: none;
+  }
+}

@@ -8,6 +8,7 @@ import {
 } from "react";
 
 import type { ExplorerItem } from "../../types/explorer";
+import { matchesSearch } from "../../utils/explorer-items";
 
 import styles from "./explorer-search.module.css";
 
@@ -33,27 +34,12 @@ export function ExplorerSearch({
   }, [items]);
 
   const filteredIndexes = useMemo(() => {
-    const normalizedSearch = search.trim().toLowerCase();
-
     return items.reduce<number[]>((indexes, item, index) => {
       const matchesCategory =
         selectedCategory === "all" ||
         item.category === selectedCategory;
 
-      const searchableContent = [
-        item.name,
-        item.description,
-        item.category,
-        ...item.tags,
-      ]
-        .join(" ")
-        .toLowerCase();
-
-      const matchesSearch =
-        normalizedSearch.length === 0 ||
-        searchableContent.includes(normalizedSearch);
-
-      if (matchesCategory && matchesSearch) {
+      if (matchesCategory && matchesSearch(item, search)) {
         indexes.push(index);
       }
 

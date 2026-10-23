@@ -69,8 +69,9 @@ src/
 │       ├── page.tsx           # explorer: list + search + category filter
 │       └── [id]/page.tsx      # playground page (generateStaticParams, dynamicParams = false)
 ├── features/
-│   ├── explorer/              # ComponentExplorer, ExplorerSearch (client), ComponentCard
-│   └── playground/            # ComponentPlayground (client) + types/playground.ts (defineComponent, control types)
+│   ├── explorer/              # ComponentExplorer, ExplorerSearch (client), ComponentCard, utils (toExplorerItems, matchesSearch)
+│   ├── playground/            # ComponentPlayground (client) + types/playground.ts (defineComponent, control types)
+│   └── search/                # CommandPalette (⌘K / Ctrl+K native <dialog>) + useShortcutLabel
 ├── registry/
 │   ├── component-registry.ts  # id → definition map, ComponentId type, helpers
 │   └── <kebab-name>/          # definition.tsx (+ optional <name>-demo.tsx wrapper) + index.ts
@@ -83,6 +84,8 @@ src/
 Data flow: `component-registry.ts` is the single source of truth. `/components` lists `getComponentDefinitions()`; `/components/[id]` validates the id with `isComponentId`, and `ComponentPlayground` holds the config state, renders form controls from `definition.controls`, previews via `definition.renderConfig(config)` and shows `definition.generateCodeFromConfig(config)`.
 
 `defineComponent<TConfig>()` (in `features/playground/types/playground.ts`) takes `{ id, name, description, version, category, tags, defaultConfig, controls, render, generateCode }`. Control types: `range` (min/max/step/suffix), `color`, `toggle`, `select` (options). `TConfig` values must be `string | number | boolean`. Categories: `buttons | cards | controls | navigation | text | effects`.
+
+The root layout passes `toExplorerItems(getComponentDefinitions())` to `Navbar`, which renders the `CommandPalette`. Client components must import explorer **types/utils by path** (not the `@/features/explorer` barrel) so the registry is not pulled into the client bundle.
 
 Path alias: `@/*` → `apps/docs/src/*`. Styling in the docs app mixes CSS Modules (most components) with Tailwind utilities (layout).
 
@@ -111,5 +114,5 @@ Path alias: `@/*` → `apps/docs/src/*`. Styling in the docs app mixes CSS Modul
 ## Known issues / placeholders
 
 - `/collections` and `/journal` are "Coming soon" placeholders built with `PageIntro`; `/privacy` and `/terms` hold minimal legal copy.
-- The Navbar "Search ⌘K" button and the "Code" / "Usage" tabs on component pages are non-functional placeholders.
+- The "Code" / "Usage" tabs on component pages are non-functional placeholders.
 - No tests and no CI.
