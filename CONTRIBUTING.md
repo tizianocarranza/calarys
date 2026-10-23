@@ -16,6 +16,7 @@ pnpm dev          # http://localhost:3000
    ```bash
    pnpm typecheck
    pnpm lint
+   pnpm test
    pnpm build   # for changes to routes, layouts or rendering
    ```
 4. Open a pull request against `main`. PRs are merged with a merge commit and the branch is deleted afterwards.
@@ -142,4 +143,4 @@ Add `apps/docs/src/registry/<name>/index.ts` re-exporting the definition and reg
 
 - Optionally showcase it on the landing page (`apps/docs/src/app/page.tsx`).
 - Add its props table to [`packages/ui/README.md`](packages/ui/README.md) and the components table in the root [`README.md`](README.md).
-- Run `pnpm typecheck && pnpm lint` and check the playground in the browser.
+- Add `<name>.test.tsx` next to the component (see the existing tests), run `pnpm lint && pnpm typecheck && pnpm test` and check the playground in the browser.

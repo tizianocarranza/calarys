@@ -53,4 +53,5 @@ pnpm build       # next build
 pnpm start       # next start
 pnpm lint        # eslint
 pnpm typecheck   # tsc --noEmit
+pnpm test        # vitest run
 ```
