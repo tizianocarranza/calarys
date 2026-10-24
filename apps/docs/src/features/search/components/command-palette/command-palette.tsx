@@ -51,6 +51,13 @@ const pages: PaletteResult[] = [
     href: "/journal",
     group: "Pages",
   },
+  {
+    id: "page-demo",
+    label: "Demo",
+    hint: "Noct, a lighting app built with Calarys",
+    href: "/demo",
+    group: "Pages",
+  },
 ];
 
 export function CommandPalette({
