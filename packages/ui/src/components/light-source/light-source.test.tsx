@@ -106,4 +106,13 @@ describe("LightSource", () => {
 
     expect(label.style.getPropertyValue("--light-proximity")).toBe("0");
   });
+
+  it("exposes its finish so components take its materials", () => {
+    const { container } = render(<LightSource finish="onyx">Content</LightSource>);
+
+    expect(container.firstElementChild).toHaveAttribute(
+      "data-calarys-finish",
+      "onyx",
+    );
+  });
 });

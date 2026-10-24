@@ -6,6 +6,17 @@
 
   max-width: 100%;
   padding: 2rem;
+
+  border-radius: 1rem;
+}
+
+.scene[data-finish="onyx"] {
+  color: #e8e5de;
+  background: #0b0b0c;
+}
+
+.scene[data-finish="ivory"] {
+  background: #f3f0e9;
 }
 
 .controls {

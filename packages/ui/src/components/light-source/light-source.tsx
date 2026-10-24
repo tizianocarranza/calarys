@@ -12,11 +12,14 @@ import {
 
 import styles from "./light-source.module.css";
 
+export type LightSourceFinish = "onyx" | "ivory";
+
 export type LightSourceProps = {
   children: ReactNode;
   color?: string;
   intensity?: number;
   reach?: number;
+  finish?: LightSourceFinish;
 };
 
 type LightPosition = {
@@ -85,6 +88,7 @@ export function LightSource({
   color = "#ffffff",
   intensity = 0.6,
   reach = 480,
+  finish,
 }: LightSourceProps) {
   const [store] = useState(createLightStore);
 
@@ -154,7 +158,11 @@ export function LightSource({
 
   return (
     <LightContext.Provider value={store}>
-      <div className={styles.root} style={lightStyle}>
+      <div
+        className={styles.root}
+        style={lightStyle}
+        data-calarys-finish={finish}
+      >
         {children}
       </div>
     </LightContext.Provider>

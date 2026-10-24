@@ -30,11 +30,11 @@ export function SpotlightCard({
   children,
   radius = 200,
   intensity = 0.65,
-  spotlightColor = "#ffffff",
-  backgroundColor = "#e9e7e2",
-  textColor = "#181714",
+  spotlightColor,
+  backgroundColor,
+  textColor,
   border = true,
-  borderColor = "rgba(0, 0, 0, 0.12)",
+  borderColor,
   shadow = false,
   padding = 32,
   cornerRadius = 24,
@@ -112,6 +112,7 @@ export function SpotlightCard({
       ref={cardRef}
       className={styles.card}
       style={cardStyle}
+      data-calarys-material="matte"
       data-border={border}
       data-shadow={shadow}
       onPointerMove={handlePointerMove}

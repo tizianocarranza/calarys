@@ -65,6 +65,7 @@ Component conventions (follow them for every new component):
 - Pointer-driven effects write CSS variables directly on the DOM node through a ref (`style.setProperty`) instead of React state, to avoid re-renders; throttle with `requestAnimationFrame` when needed and clean up on unmount.
 - Use shared tokens from `styles/styles.css` (`--calarys-shadow-component-sm|md|lg`); add new cross-component tokens there with the `--calarys-` prefix.
 - Plain CSS Modules only — no Tailwind inside `packages/ui`. Respect `prefers-reduced-motion` and keep focus styles (`:focus-visible`).
+- **Light and materials.** Call `useLight(ref)` on the element that should react to the shared `LightSource` (it gets `data-lit` and `--light-*` variables). Give every visual part a role and the material that role implies, as `data-calarys-material`: surface → `matte`, touch → `gloss`, structure → `metal`, active → `emission`. Never choose a material for taste or offer a prop to change it. Color props fall back to the finish tokens (`var(--prop, var(--calarys-…, plain default))`, no default in the destructuring), and material styles live under `:global([data-calarys-finish])` so the plain look stays unchanged.
 
 ### `apps/docs`
 
@@ -73,12 +74,16 @@ src/
 ├── app/                       # routes (App Router)
 │   ├── layout.tsx             # fonts (Instrument Sans, Cormorant Garamond), Navbar, Footer, SmoothScrollProvider, global CSS
 │   ├── page.tsx               # landing: hero + ComponentShowcase
+│   ├── materials/             # Materials page: roles → materials, Onyx and Ivory finishes
+│   ├── demo/                  # Noct, a demo lighting app built with Calarys
 │   ├── collections/, journal/, privacy/, terms/  # simple PageIntro pages
 │   └── components/
 │       ├── page.tsx           # explorer: list + search + category filter
 │       └── [id]/page.tsx      # Preview / Code / Usage tabs (generateStaticParams, dynamicParams = false)
 ├── features/
 │   ├── component-docs/        # ComponentTabs (client), ComponentSource, ComponentUsage, getComponentSource (reads packages/ui at build)
+│   ├── demo/                  # LightingApp (Noct)
+│   ├── materials/             # MaterialsShowcase
 │   ├── explorer/              # ComponentExplorer, ExplorerSearch (client), ComponentCard, utils (toExplorerItems, matchesSearch)
 │   ├── playground/            # ComponentPlayground (client) + types/playground.ts (defineComponent, control types)
 │   └── search/                # CommandPalette (⌘K / Ctrl+K native <dialog>) + useShortcutLabel

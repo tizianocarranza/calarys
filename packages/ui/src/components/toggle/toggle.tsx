@@ -33,9 +33,9 @@ export function Toggle({
   defaultChecked = false,
   onChange,
   disabled = false,
-  activeColor = "#181714",
-  inactiveColor = "#d8d6d1",
-  thumbColor = "#ffffff",
+  activeColor,
+  inactiveColor,
+  thumbColor,
   shadow = false,
   size = "md",
   "aria-label": ariaLabel,
@@ -84,8 +84,11 @@ export function Toggle({
         onChange={handleChange}
       />
 
-      <span className={styles.track}>
-        <span className={styles.thumb} />
+      <span
+        className={styles.track}
+        data-calarys-material={isChecked ? "emission" : "matte"}
+      >
+        <span className={styles.thumb} data-calarys-material="gloss" />
       </span>
     </label>
   );

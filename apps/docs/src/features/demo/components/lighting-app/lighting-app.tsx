@@ -162,7 +162,11 @@ export function LightingApp() {
   };
 
   return (
-    <LightSource color={theme.light.color} intensity={theme.light.intensity}>
+    <LightSource
+      color={theme.light.color}
+      intensity={theme.light.intensity}
+      finish={finish === "matte" ? "onyx" : "ivory"}
+    >
       <div className={styles.app} data-finish={finish}>
         <header className={styles.header}>
           <div>

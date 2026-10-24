@@ -6,6 +6,7 @@ export type LightSourceConfig = {
   color: string;
   intensity: number;
   reach: number;
+  finish: "none" | "onyx" | "ivory";
 };
 
 export const lightSourceDefinition = defineComponent<LightSourceConfig>({
@@ -49,12 +50,19 @@ export const lightSourceDefinition = defineComponent<LightSourceConfig>({
       description:
         "Distance in px from a component's edge at which the light fades out.",
     },
+    {
+      name: "finish",
+      type: '"onyx" | "ivory"',
+      description:
+        "Curated set of materials for every component inside: matte surfaces, gloss parts you touch, metal edges and emitting active states. Without it the components keep their plain look.",
+    },
   ],
 
   defaultConfig: {
     color: "#ffffff",
     intensity: 0.6,
     reach: 480,
+    finish: "none",
   },
 
   controls: [
@@ -80,15 +88,28 @@ export const lightSourceDefinition = defineComponent<LightSourceConfig>({
       step: 20,
       suffix: "px",
     },
+    {
+      key: "finish",
+      label: "Finish",
+      type: "select",
+      options: [
+        { label: "None", value: "none" },
+        { label: "Onyx", value: "onyx" },
+        { label: "Ivory", value: "ivory" },
+      ],
+    },
   ],
 
   render: (config) => <LightSourceDemo {...config} />,
 
   generateCode: (config) => {
+    const finish =
+      config.finish === "none" ? "" : `\n  finish="${config.finish}"`;
+
     return `<LightSource
   color="${config.color}"
   intensity={${config.intensity}}
-  reach={${config.reach}}
+  reach={${config.reach}}${finish}
 >
   {/* Your app */}
 </LightSource>`;

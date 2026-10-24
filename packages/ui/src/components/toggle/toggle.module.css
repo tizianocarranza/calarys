@@ -1,4 +1,9 @@
 .toggle {
+  /* Colors fall back to the LightSource finish, then to the plain look. */
+  --toggle-active: var(--active-color, var(--calarys-emission, #181714));
+  --toggle-inactive: var(--inactive-color, var(--calarys-groove, #d8d6d1));
+  --toggle-thumb: var(--thumb-color, var(--calarys-handle, #ffffff));
+
   --toggle-width: 3.5rem;
   --toggle-height: 2rem;
   --toggle-padding: 0.2rem;
@@ -32,7 +37,7 @@
 
   padding: var(--toggle-padding);
 
-  background: var(--inactive-color);
+  background: var(--toggle-inactive);
   border-radius: 999px;
 
   transition: background 300ms ease;
@@ -44,7 +49,7 @@
   height: 100%;
   aspect-ratio: 1;
 
-  background: var(--thumb-color);
+  background: var(--toggle-thumb);
   border-radius: 50%;
 
   box-shadow: 0 1px 3px rgb(0 0 0 / 12%);
@@ -57,7 +62,7 @@
 }
 
 .input:checked + .track {
-  background: var(--active-color);
+  background: var(--toggle-active);
 }
 
 .input:checked + .track .thumb {
@@ -139,14 +144,48 @@
       in srgb,
       var(--calarys-light-color, #ffffff)
         min(calc(var(--light-proximity) * var(--calarys-light-intensity, 0.6) * 160%), 100%),
-      var(--thumb-color)
+      var(--toggle-thumb)
     ),
-    var(--thumb-color) 45%,
-    color-mix(in srgb, var(--thumb-color) 82%, #000000) 100%
+    var(--toggle-thumb) 45%,
+    color-mix(in srgb, var(--toggle-thumb) 82%, #000000) 100%
   );
 
   box-shadow: calc(var(--light-nx, 0) * -2px)
     calc(var(--light-ny, -1) * -2px + 1px) 4px rgb(0 0 0 / 22%);
+}
+
+/* ---------------------------------- */
+/* Materials (inside a finish)        */
+/* ---------------------------------- */
+
+/* Track: a matte surface with grain. */
+:global([data-calarys-finish]) .toggle .track {
+  background: var(--calarys-grain), var(--toggle-inactive);
+}
+
+/* On: the track emits light instead of reflecting it. */
+:global([data-calarys-finish]) .toggle .input:checked + .track {
+  background: var(--toggle-active);
+  box-shadow:
+    0 0 0.9rem color-mix(in srgb, var(--calarys-emission-glow) 45%, transparent),
+    inset 0 0 0 1px rgb(255 255 255 / 18%);
+}
+
+/* Thumb: polished, with a tight highlight that is there even in the dark
+   and sharpens as the light comes closer. */
+:global([data-calarys-finish]) .toggle .thumb {
+  background: radial-gradient(
+    circle at calc(50% + var(--light-nx, 0) * 28%)
+      calc(50% + var(--light-ny, -1) * 28%),
+    color-mix(
+      in srgb,
+      var(--calarys-light-color, #ffffff)
+        calc(35% + var(--light-proximity) * 50%),
+      var(--toggle-thumb)
+    ),
+    var(--toggle-thumb) 38%,
+    color-mix(in srgb, var(--toggle-thumb) 70%, #000000) 100%
+  );
 }
 
 /* ---------------------------------- */

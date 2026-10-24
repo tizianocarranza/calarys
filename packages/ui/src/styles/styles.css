@@ -15,3 +15,48 @@
   inherits: true;
   initial-value: 0;
 }
+
+/* ---------------------------------- */
+/* Materials                          */
+/* ---------------------------------- */
+
+/* Calarys picks a part's material from its role, never from taste:
+   - surface (what you look at)  → matte: wide, soft sheen and fine grain
+   - touch (what you press/move) → gloss: tight highlight and clearcoat
+   - structure (edges, frames)   → metal: a ring that catches the light
+   - active (what is "on")       → emission: it gives off light
+   A finish only sets the colors of those materials, and applies when a
+   LightSource has one (`finish="onyx" | "ivory"`). Without a finish the
+   components keep their plain look. */
+
+:root {
+  --calarys-grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.5 0 0 0 0 0.5 0 0 0 0 0.5 0 0 0 0.14 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Matte black, polished graphite, dark steel, a warm LED. */
+[data-calarys-finish="onyx"] {
+  --calarys-surface: #141416;
+  --calarys-surface-text: #e8e5de;
+  --calarys-groove: #2a2a2e;
+  --calarys-touch: #232327;
+  --calarys-touch-text: #ece9e2;
+  --calarys-handle: #7c7c82;
+  --calarys-metal: #34363b;
+  --calarys-metal-shine: #c9ccd2;
+  --calarys-emission: #e9e2d0;
+  --calarys-emission-glow: #e9c98a;
+}
+
+/* Ivory ceramic, black lacquer, brass, an amber LED. */
+[data-calarys-finish="ivory"] {
+  --calarys-surface: #ebe7de;
+  --calarys-surface-text: #1d1b17;
+  --calarys-groove: #d6d1c5;
+  --calarys-touch: #1f1d1a;
+  --calarys-touch-text: #f5f2ea;
+  --calarys-handle: #1f1d1a;
+  --calarys-metal: #8a6a3a;
+  --calarys-metal-shine: #f1d9a6;
+  --calarys-emission: #c98f2e;
+  --calarys-emission-glow: #e0a84a;
+}

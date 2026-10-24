@@ -26,8 +26,8 @@ export function MagneticButton({
   radius = 140,
   strength = 0.35,
   duration = 250,
-  backgroundColor = "#111111",
-  textColor = "#ffffff",
+  backgroundColor,
+  textColor,
   onClick,
 }: MagneticButtonProps) {
   const buttonRef = useRef<HTMLButtonElement>(null);
@@ -98,6 +98,7 @@ export function MagneticButton({
         type="button"
         className={styles.button}
         style={buttonStyle}
+        data-calarys-material="gloss"
         onClick={onClick}
       >
         <span>{children}</span>

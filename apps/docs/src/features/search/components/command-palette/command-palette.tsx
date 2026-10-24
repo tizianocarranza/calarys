@@ -38,6 +38,13 @@ const pages: PaletteResult[] = [
     group: "Pages",
   },
   {
+    id: "page-materials",
+    label: "Materials",
+    hint: "Roles, materials and finishes",
+    href: "/materials",
+    group: "Pages",
+  },
+  {
     id: "page-collections",
     label: "Collections",
     hint: "Coming soon",

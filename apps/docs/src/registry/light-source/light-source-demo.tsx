@@ -8,17 +8,23 @@ import {
 
 import styles from "./light-source-demo.module.css";
 
-type LightSourceDemoProps = Omit<LightSourceProps, "children">;
+type LightSourceDemoProps = Omit<LightSourceProps, "children" | "finish"> & {
+  finish: LightSourceProps["finish"] | "none";
+};
 
 // The three components share one light: move the pointer between them and
 // watch highlights and shadows agree on where it comes from.
-export function LightSourceDemo(props: LightSourceDemoProps) {
+// With a finish the components take its materials and colors; without one
+// the card keeps the warm plain look.
+export function LightSourceDemo({ finish, ...props }: LightSourceDemoProps) {
+  const hasFinish = finish !== "none";
+
   return (
-    <LightSource {...props}>
-      <div className={styles.scene}>
+    <LightSource {...props} finish={hasFinish ? finish : undefined}>
+      <div className={styles.scene} data-finish={finish}>
         <SpotlightCard
-          spotlightColor="#fff3c4"
-          backgroundColor="#eceae6"
+          spotlightColor={hasFinish ? undefined : "#fff3c4"}
+          backgroundColor={hasFinish ? undefined : "#eceae6"}
           shadow
           padding={28}
         >
