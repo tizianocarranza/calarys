@@ -42,4 +42,17 @@ describe("LightingApp", () => {
       expect(toggle).not.toBeChecked();
     }
   });
+
+  it("switches between the matte and light finishes", () => {
+    const { container } = render(<LightingApp />);
+
+    const app = container.querySelector("[data-finish]");
+    const finish = screen.getByRole("checkbox", { name: "Matte finish" });
+
+    expect(app).toHaveAttribute("data-finish", "matte");
+
+    fireEvent.click(finish);
+
+    expect(app).toHaveAttribute("data-finish", "light");
+  });
 });

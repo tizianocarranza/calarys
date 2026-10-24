@@ -1,4 +1,8 @@
 .app {
+  --noct-accent: #e9c98a;
+
+  position: relative;
+
   display: flex;
   flex-direction: column;
   gap: 4.5rem;
@@ -53,6 +57,23 @@
   color: var(--muted);
   font-size: 1.05rem;
   line-height: 1.6;
+}
+
+.headerAside {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 1.5rem;
+}
+
+.finish {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+
+  color: var(--muted);
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
 }
 
 .summary {
@@ -115,6 +136,8 @@
 }
 
 .room {
+  position: relative;
+
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
@@ -126,6 +149,29 @@
 
 .room[data-lit-room="false"] {
   opacity: 0.7;
+}
+
+/* The one luminous accent: a thin warm line, like an LED strip, on rooms
+   that are on. */
+.led {
+  position: absolute;
+  top: -0.5rem;
+  left: 0;
+
+  width: 1.75rem;
+  height: 2px;
+
+  background: var(--noct-accent);
+  border-radius: 1px;
+  box-shadow: 0 0 0.75rem var(--noct-accent);
+
+  opacity: 0;
+
+  transition: opacity 300ms ease;
+}
+
+.room[data-lit-room="true"] .led {
+  opacity: 1;
 }
 
 .roomHeader {
@@ -194,7 +240,54 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .room {
+  .room,
+  .led {
     transition: none;
   }
+}
+
+/* ---------------------------------- */
+/* Matte finish                       */
+/* ---------------------------------- */
+
+/* The page tokens follow the demo while it is in matte. The navbar and
+   footer hard-code light colors, so they are overridden here too. */
+:global(:root):has(.app[data-finish="matte"]) {
+  --background: #0b0b0c;
+  --foreground: #e8e5de;
+  --muted: #8f8c85;
+  --border: rgb(255 255 255 / 8%);
+}
+
+:global(:root):has(.app[data-finish="matte"]) :global(nav a),
+:global(:root):has(.app[data-finish="matte"]) :global(footer),
+:global(:root):has(.app[data-finish="matte"]) :global(footer *) {
+  color: var(--foreground);
+}
+
+:global(:root):has(.app[data-finish="matte"]) :global(nav button) {
+  color: var(--foreground);
+  background: rgb(255 255 255 / 6%);
+}
+
+:global(:root):has(.app[data-finish="matte"]) :global(nav [data-open]) {
+  background: rgb(11 11 12 / 96%);
+}
+
+.app[data-finish="matte"] .room[data-lit-room="false"] {
+  opacity: 1;
+}
+
+/* Fine grain so the black reads as a material, not a flat fill. */
+.app[data-finish="matte"]::before {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+
+  content: "";
+
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: 0.05;
+
+  pointer-events: none;
 }
