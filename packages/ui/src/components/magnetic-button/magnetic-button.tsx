@@ -1,6 +1,11 @@
 "use client";
 
-import { type CSSProperties, type PointerEvent, useRef } from "react";
+import {
+  type CSSProperties,
+  type MouseEventHandler,
+  type PointerEvent,
+  useRef,
+} from "react";
 
 import { useLight } from "../light-source";
 
@@ -13,6 +18,7 @@ export type MagneticButtonProps = {
   duration?: number;
   backgroundColor?: string;
   textColor?: string;
+  onClick?: MouseEventHandler<HTMLButtonElement>;
 };
 
 export function MagneticButton({
@@ -22,6 +28,7 @@ export function MagneticButton({
   duration = 250,
   backgroundColor = "#111111",
   textColor = "#ffffff",
+  onClick,
 }: MagneticButtonProps) {
   const buttonRef = useRef<HTMLButtonElement>(null);
 
@@ -91,6 +98,7 @@ export function MagneticButton({
         type="button"
         className={styles.button}
         style={buttonStyle}
+        onClick={onClick}
       >
         <span>{children}</span>
         <span aria-hidden="true">↗</span>

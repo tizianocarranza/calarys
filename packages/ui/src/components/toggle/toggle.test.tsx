@@ -56,4 +56,12 @@ describe("Toggle", () => {
 
     expect(label?.style.getPropertyValue("--active-color")).toBe("#ff0000");
   });
+
+  it("names the checkbox with aria-label", () => {
+    render(<Toggle aria-label="Kitchen lights" />);
+
+    expect(
+      screen.getByRole("checkbox", { name: "Kitchen lights" }),
+    ).toBeInTheDocument();
+  });
 });

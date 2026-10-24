@@ -1,5 +1,5 @@
 import { fireEvent, render, screen } from "@testing-library/react";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 
 import { MagneticButton } from "./magnetic-button";
 
@@ -51,5 +51,15 @@ describe("MagneticButton", () => {
     fireEvent.pointerMove(area, { clientX: 200, clientY: 0 });
 
     expect(button.style.getPropertyValue("--magnetic-x")).toBe("0px");
+  });
+
+  it("calls onClick when pressed", () => {
+    const onClick = vi.fn();
+
+    render(<MagneticButton onClick={onClick}>Press</MagneticButton>);
+
+    fireEvent.click(screen.getByRole("button", { name: /press/i }));
+
+    expect(onClick).toHaveBeenCalledTimes(1);
   });
 });

@@ -24,6 +24,8 @@ export type ToggleProps = {
   shadow?: boolean;
 
   size?: "sm" | "md" | "lg";
+
+  "aria-label"?: string;
 };
 
 export function Toggle({
@@ -36,6 +38,7 @@ export function Toggle({
   thumbColor = "#ffffff",
   shadow = false,
   size = "md",
+  "aria-label": ariaLabel,
 }: ToggleProps) {
   const toggleRef = useRef<HTMLLabelElement>(null);
 
@@ -75,6 +78,7 @@ export function Toggle({
       <input
         className={styles.input}
         type="checkbox"
+        aria-label={ariaLabel}
         checked={isChecked}
         disabled={disabled}
         onChange={handleChange}

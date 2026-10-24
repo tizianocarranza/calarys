@@ -54,6 +54,7 @@ A pill button that moves toward the pointer while it is within `radius` of its c
 | `duration` | `number` | `250` | Transition duration in ms. |
 | `backgroundColor` | `string` | `"#111111"` | Button background. |
 | `textColor` | `string` | `"#ffffff"` | Label color. |
+| `onClick` | `MouseEventHandler<HTMLButtonElement>` | — | Called when the button is pressed. |
 
 ### `SpotlightCard`
 
@@ -88,6 +89,7 @@ An accessible switch built on a visually hidden native checkbox. Works controlle
 | `thumbColor` | `string` | `"#ffffff"` | Thumb color. |
 | `shadow` | `boolean` | `false` | Apply `--calarys-shadow-component-sm` to the track. |
 | `size` | `"sm" \| "md" \| "lg"` | `"md"` | Switch size. |
+| `aria-label` | `string` | — | Accessible name for the checkbox (the toggle has no visible label). |
 
 ## Style tokens
 
