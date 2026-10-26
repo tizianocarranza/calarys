@@ -24,7 +24,7 @@ export function Navbar({ searchItems }: NavbarProps) {
 
   const links = [
     { label: "Components", href: "/components" },
-    { label: "Materials", href: "/materials" },
+    { label: "Foundations", href: "/foundations" },
     { label: "Collections", href: "/collections" },
     { label: "Journal", href: "/journal" },
     { label: "Demo", href: "/demo" },

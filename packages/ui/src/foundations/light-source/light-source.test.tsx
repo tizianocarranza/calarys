@@ -1,7 +1,7 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
-import { Toggle } from "../toggle";
+import { Toggle } from "../../components/toggle";
 import { LightSource } from "./light-source";
 
 let frames: FrameRequestCallback[] = [];

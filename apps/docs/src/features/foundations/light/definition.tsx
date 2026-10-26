@@ -1,4 +1,4 @@
-import { defineComponent } from "../../features/playground/types/playground";
+import { defineComponent } from "@/features/playground/types/playground";
 
 import { LightSourceDemo } from "./light-source-demo";
 

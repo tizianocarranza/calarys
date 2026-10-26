@@ -1,6 +1,6 @@
 "use client";
 
-import { ComponentPlayground } from "../../features/playground/components/component-playground";
+import { ComponentPlayground } from "@/features/playground/components/component-playground";
 
 import { lightSourceDefinition } from "./definition";
 

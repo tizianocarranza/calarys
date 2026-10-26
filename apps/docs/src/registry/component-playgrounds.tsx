@@ -10,11 +10,6 @@ import type { ComponentId } from "./component-registry";
 // whole registry. The import() calls must live in a Client Component: Next
 // does not code split Client Components dynamically imported from the server.
 const componentPlaygrounds: Record<ComponentId, ComponentType> = {
-  "light-source": dynamic(() =>
-    import("./light-source/light-source-playground").then(
-      (module) => module.LightSourcePlayground,
-    ),
-  ),
   "magnetic-button": dynamic(() =>
     import("./magnetic-button/magnetic-button-playground").then(
       (module) => module.MagneticButtonPlayground,

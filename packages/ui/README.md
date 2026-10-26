@@ -19,7 +19,9 @@ import { LightSource, MagneticButton, SpotlightCard, Toggle } from "@calarys/ui"
 
 All components are client components (`"use client"`).
 
-## Components
+## Foundations
+
+Foundations are not components you place: they are the systems every component shares. They live in `src/foundations/` and are exported from the package root like the components.
 
 ### `LightSource`
 
@@ -42,6 +44,26 @@ To light your own components, call `useLight(ref)` on an element. Inside a `Ligh
 | `--light-proximity` | `0`–`1`; `1` while the light is over the element, `0` when it is out of reach or off the window. |
 
 The source also sets `--calarys-light-color` and `--calarys-light-intensity` for its subtree.
+
+### Materials
+
+Calarys never asks which material you like: each part of a component has a role, and the role decides its material.
+
+| Role | Material | Parts |
+| --- | --- | --- |
+| Surface (what you look at) | Matte: wide, soft sheen over a fine grain | Card faces, toggle tracks |
+| Touch (what you press or move) | Gloss: clearcoat and a tight highlight | Buttons, toggle thumbs |
+| Structure (what frames) | Metal: a 1px ring whose shine faces the light | Card and button edges |
+| Active (what is on) | Emission: it gives off light | A toggle that is on |
+
+Each part carries its role's material as `data-calarys-material`. Materials render inside a `LightSource` with a `finish`, which sets their colors:
+
+- `onyx`: matte black, polished graphite, dark steel, a warm LED.
+- `ivory`: ivory ceramic, black lacquer, brass, an amber LED.
+
+Colors stay free: a color prop you pass wins over the finish, and the materials still apply on top of it. Color props you leave unset take the finish's colors, and outside a finish they fall back to the defaults listed above.
+
+## Components
 
 ### `MagneticButton`
 
@@ -91,24 +113,6 @@ An accessible switch built on a visually hidden native checkbox. Works controlle
 | `shadow` | `boolean` | `false` | Apply `--calarys-shadow-component-sm` to the track. |
 | `size` | `"sm" \| "md" \| "lg"` | `"md"` | Switch size. |
 | `aria-label` | `string` | — | Accessible name for the checkbox (the toggle has no visible label). |
-
-## Materials
-
-Calarys never asks which material you like: each part of a component has a role, and the role decides its material.
-
-| Role | Material | Parts |
-| --- | --- | --- |
-| Surface (what you look at) | Matte: wide, soft sheen over a fine grain | Card faces, toggle tracks |
-| Touch (what you press or move) | Gloss: clearcoat and a tight highlight | Buttons, toggle thumbs |
-| Structure (what frames) | Metal: a 1px ring whose shine faces the light | Card and button edges |
-| Active (what is on) | Emission: it gives off light | A toggle that is on |
-
-Each part carries its role's material as `data-calarys-material`. Materials render inside a `LightSource` with a `finish`, which sets their colors:
-
-- `onyx`: matte black, polished graphite, dark steel, a warm LED.
-- `ivory`: ivory ceramic, black lacquer, brass, an amber LED.
-
-Colors stay free: a color prop you pass wins over the finish, and the materials still apply on top of it. Color props you leave unset take the finish's colors, and outside a finish they fall back to the defaults listed above.
 
 ## Style tokens
 

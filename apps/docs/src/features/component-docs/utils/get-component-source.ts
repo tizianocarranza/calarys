@@ -6,20 +6,22 @@ export type SourceFile = {
   code: string;
 };
 
-const componentsDirectory = path.join(
+const sourceDirectory = path.join(
   process.cwd(),
   "..",
   "..",
   "packages",
   "ui",
   "src",
-  "components",
 );
 
+// Components live in src/components; the systems they share (the light)
+// live in src/foundations.
 export async function getComponentSource(
   componentId: string,
+  folder: "components" | "foundations" = "components",
 ): Promise<SourceFile[]> {
-  const componentDirectory = path.join(componentsDirectory, componentId);
+  const componentDirectory = path.join(sourceDirectory, folder, componentId);
 
   const fileNames = (await readdir(componentDirectory))
     .filter((fileName) => fileName !== "index.ts")

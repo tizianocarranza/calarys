@@ -7,7 +7,7 @@ import {
   useState,
 } from "react";
 
-import { useLight } from "../light-source";
+import { useLight } from "../../foundations/light-source";
 
 import styles from "./toggle.module.css";
 

@@ -38,10 +38,24 @@ const pages: PaletteResult[] = [
     group: "Pages",
   },
   {
+    id: "page-foundations",
+    label: "Foundations",
+    hint: "What every component shares",
+    href: "/foundations",
+    group: "Pages",
+  },
+  {
+    id: "page-light",
+    label: "Light",
+    hint: "One light for the whole page",
+    href: "/foundations/light",
+    group: "Pages",
+  },
+  {
     id: "page-materials",
     label: "Materials",
     hint: "Roles, materials and finishes",
-    href: "/materials",
+    href: "/foundations/materials",
     group: "Pages",
   },
   {

@@ -1,10 +1,16 @@
-import type { RegisteredComponent } from "@/registry/component-registry";
+import type {
+  ComponentPropDoc,
+  PlaygroundDefinition,
+} from "@/features/playground/types/playground";
 import { CodeBlock } from "@/shared/components";
 
 import styles from "./component-usage.module.css";
 
 type ComponentUsageProps = {
-  definition: RegisteredComponent;
+  definition: Pick<PlaygroundDefinition, "defaultConfig" | "generateCodeFromConfig"> & {
+    exportName: string;
+    props: ComponentPropDoc[];
+  };
 };
 
 export function ComponentUsage({ definition }: ComponentUsageProps) {

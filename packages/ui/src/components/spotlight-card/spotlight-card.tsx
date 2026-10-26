@@ -8,7 +8,7 @@ import {
   useRef,
 } from "react";
 
-import { useLight } from "../light-source";
+import { useLight } from "../../foundations/light-source";
 
 import styles from "./spotlight-card.module.css";
 
