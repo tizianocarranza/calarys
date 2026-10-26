@@ -10,6 +10,13 @@
 }
 
 .button {
+  /* Colors fall back to the LightSource finish, then to the plain look. */
+  --button-fill: var(--button-background, var(--calarys-touch, #111111));
+  --button-ink: var(--button-color, var(--calarys-touch-text, #ffffff));
+
+  position: relative;
+  isolation: isolate;
+
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -18,11 +25,11 @@
   min-width: 18rem;
   padding: 1.25rem 1.75rem;
 
-  color: var(--button-color);
+  color: var(--button-ink);
   font: inherit;
   font-size: 1rem;
 
-  background: var(--button-background);
+  background: var(--button-fill);
   border: 0;
   border-radius: 999px;
   cursor: pointer;
@@ -50,4 +57,117 @@
 .button:focus-visible {
   outline: 2px solid currentColor;
   outline-offset: 4px;
+}
+
+/* ---------------------------------- */
+/* Lit by a LightSource               */
+/* ---------------------------------- */
+
+.button[data-lit="true"] {
+  box-shadow:
+    calc(var(--light-nx, 0) * -1.25rem)
+      calc(var(--light-ny, -1) * -1.25rem + 0.5rem) 2.5rem
+      rgb(0 0 0 / 14%),
+    inset calc(var(--light-nx, 0) * -1.5px) calc(var(--light-ny, -1) * -1.5px)
+      0
+      color-mix(
+        in srgb,
+        var(--calarys-light-color, #ffffff)
+          calc(var(--light-proximity) * 40%),
+        transparent
+      );
+
+  transition:
+    transform var(--magnetic-duration) cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 200ms ease,
+    --light-proximity 200ms ease;
+}
+
+/* Specular highlight under the label. */
+.button[data-lit="true"]::before {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+
+  content: "";
+
+  background: radial-gradient(
+    circle 9rem at var(--light-x, 50%) var(--light-y, -50%),
+    color-mix(
+      in srgb,
+      var(--calarys-light-color, #ffffff)
+        calc(var(--light-proximity) * var(--calarys-light-intensity, 0.6) * 70%),
+      transparent
+    ),
+    transparent 70%
+  );
+  border-radius: inherit;
+
+  pointer-events: none;
+}
+
+/* ---------------------------------- */
+/* Materials (inside a finish)        */
+/* ---------------------------------- */
+
+/* Body: you press it, so it is gloss: a clearcoat on top of the color... */
+:global([data-calarys-finish]) .button {
+  background:
+    linear-gradient(to bottom, rgb(255 255 255 / 12%), transparent 55%),
+    var(--button-fill);
+}
+
+/* ...and a tight specular highlight instead of the wide default one. */
+:global([data-calarys-finish]) .button[data-lit="true"]::before {
+  background: radial-gradient(
+    circle 4.5rem at var(--light-x, 50%) var(--light-y, -50%),
+    color-mix(
+      in srgb,
+      var(--calarys-light-color, #ffffff) calc(var(--light-proximity) * 75%),
+      transparent
+    ),
+    transparent 70%
+  );
+}
+
+/* Edge: structure, so it is metal. A 1px ring whose shine faces the light
+   (atan2 turns the light direction into the gradient angle). */
+:global([data-calarys-finish]) .button::after {
+  position: absolute;
+  inset: 0;
+
+  padding: 1px;
+
+  content: "";
+
+  background: conic-gradient(
+    from calc(atan2(var(--light-ny, -1), var(--light-nx, 0)) + 20deg),
+    var(--calarys-metal) 0deg,
+    color-mix(
+        in srgb,
+        var(--calarys-metal-shine) calc(55% + var(--light-proximity) * 45%),
+        var(--calarys-metal)
+      )
+      70deg,
+    var(--calarys-metal) 140deg,
+    var(--calarys-metal) 220deg,
+    color-mix(in srgb, var(--calarys-metal-shine) 35%, var(--calarys-metal))
+      250deg,
+    var(--calarys-metal) 280deg
+  );
+  border-radius: inherit;
+
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
+
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .button,
+  .button[data-lit="true"] {
+    transition: none;
+  }
 }

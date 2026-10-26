@@ -3,8 +3,11 @@
 import {
   type CSSProperties,
   type ChangeEvent,
+  useRef,
   useState,
 } from "react";
+
+import { useLight } from "../../foundations/light-source";
 
 import styles from "./toggle.module.css";
 
@@ -21,6 +24,8 @@ export type ToggleProps = {
   shadow?: boolean;
 
   size?: "sm" | "md" | "lg";
+
+  "aria-label"?: string;
 };
 
 export function Toggle({
@@ -28,12 +33,17 @@ export function Toggle({
   defaultChecked = false,
   onChange,
   disabled = false,
-  activeColor = "#181714",
-  inactiveColor = "#d8d6d1",
-  thumbColor = "#ffffff",
+  activeColor,
+  inactiveColor,
+  thumbColor,
   shadow = false,
   size = "md",
+  "aria-label": ariaLabel,
 }: ToggleProps) {
+  const toggleRef = useRef<HTMLLabelElement>(null);
+
+  useLight(toggleRef);
+
   const [internalChecked, setInternalChecked] =
     useState(defaultChecked);
 
@@ -58,6 +68,7 @@ export function Toggle({
 
   return (
     <label
+      ref={toggleRef}
       className={styles.toggle}
       data-size={size}
       data-disabled={disabled}
@@ -67,13 +78,17 @@ export function Toggle({
       <input
         className={styles.input}
         type="checkbox"
+        aria-label={ariaLabel}
         checked={isChecked}
         disabled={disabled}
         onChange={handleChange}
       />
 
-      <span className={styles.track}>
-        <span className={styles.thumb} />
+      <span
+        className={styles.track}
+        data-calarys-material={isChecked ? "emission" : "matte"}
+      >
+        <span className={styles.thumb} data-calarys-material="gloss" />
       </span>
     </label>
   );

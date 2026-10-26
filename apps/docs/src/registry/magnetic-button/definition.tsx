@@ -62,6 +62,11 @@ export const magneticButtonDefinition = defineComponent<MagneticButtonConfig>({
       defaultValue: '"#ffffff"',
       description: "Label color.",
     },
+    {
+      name: "onClick",
+      type: "MouseEventHandler<HTMLButtonElement>",
+      description: "Called when the button is pressed.",
+    },
   ],
 
   defaultConfig: {

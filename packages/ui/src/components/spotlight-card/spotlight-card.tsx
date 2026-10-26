@@ -8,6 +8,8 @@ import {
   useRef,
 } from "react";
 
+import { useLight } from "../../foundations/light-source";
+
 import styles from "./spotlight-card.module.css";
 
 export type SpotlightCardProps = {
@@ -28,17 +30,19 @@ export function SpotlightCard({
   children,
   radius = 200,
   intensity = 0.65,
-  spotlightColor = "#ffffff",
-  backgroundColor = "#e9e7e2",
-  textColor = "#181714",
+  spotlightColor,
+  backgroundColor,
+  textColor,
   border = true,
-  borderColor = "rgba(0, 0, 0, 0.12)",
+  borderColor,
   shadow = false,
   padding = 32,
   cornerRadius = 24,
 }: SpotlightCardProps) {
   const cardRef = useRef<HTMLDivElement>(null);
   const frameRef = useRef<number | null>(null);
+
+  useLight(cardRef);
 
   function updatePointerPosition(x: number, y: number) {
     const card = cardRef.current;
@@ -52,7 +56,8 @@ export function SpotlightCard({
   function handlePointerMove(event: PointerEvent<HTMLDivElement>) {
     const card = cardRef.current;
 
-    if (!card) return;
+    // Inside a LightSource the spotlight follows the shared light instead.
+    if (!card || card.dataset.lit === "true") return;
 
     const rect = card.getBoundingClientRect();
 
@@ -107,6 +112,7 @@ export function SpotlightCard({
       ref={cardRef}
       className={styles.card}
       style={cardStyle}
+      data-calarys-material="matte"
       data-border={border}
       data-shadow={shadow}
       onPointerMove={handlePointerMove}

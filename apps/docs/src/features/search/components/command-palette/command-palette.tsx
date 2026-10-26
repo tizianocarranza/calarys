@@ -38,6 +38,27 @@ const pages: PaletteResult[] = [
     group: "Pages",
   },
   {
+    id: "page-foundations",
+    label: "Foundations",
+    hint: "What every component shares",
+    href: "/foundations",
+    group: "Pages",
+  },
+  {
+    id: "page-light",
+    label: "Light",
+    hint: "One light for the whole page",
+    href: "/foundations/light",
+    group: "Pages",
+  },
+  {
+    id: "page-materials",
+    label: "Materials",
+    hint: "Roles, materials and finishes",
+    href: "/foundations/materials",
+    group: "Pages",
+  },
+  {
     id: "page-collections",
     label: "Collections",
     hint: "Coming soon",
@@ -49,6 +70,13 @@ const pages: PaletteResult[] = [
     label: "Journal",
     hint: "Coming soon",
     href: "/journal",
+    group: "Pages",
+  },
+  {
+    id: "page-demo",
+    label: "Demo",
+    hint: "Noct, a lighting app built with Calarys",
+    href: "/demo",
     group: "Pages",
   },
 ];

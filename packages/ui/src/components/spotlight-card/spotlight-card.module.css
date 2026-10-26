@@ -6,20 +6,26 @@
 
 
 .card {
+  /* Colors fall back to the LightSource finish, then to the plain look. */
+  --card-fill: var(--card-background, var(--calarys-surface, #e9e7e2));
+  --card-ink: var(--card-color, var(--calarys-surface-text, #181714));
+  --card-spot: var(--spotlight-color, var(--calarys-light-color, #ffffff));
+  --card-edge: var(--card-border-color, rgb(0 0 0 / 12%));
+
   position: relative;
   overflow: hidden;
 
   padding: var(--card-padding);
 
-  color: var(--card-color);
+  color: var(--card-ink);
 
   background:
     radial-gradient(circle var(--spotlight-radius) at var(--pointer-x) var(--pointer-y),
       color-mix(in srgb,
-        var(--spotlight-color) calc(var(--spotlight-intensity) * var(--spotlight-active) * 100%),
+        var(--card-spot) calc(var(--spotlight-intensity) * var(--spotlight-active) * 100%),
         transparent),
       transparent 70%),
-    var(--card-background);
+    var(--card-fill);
 
   border-radius: var(--card-radius);
 
@@ -36,7 +42,7 @@
 }
 
 .card[data-border="true"] {
-  border: 1px solid var(--card-border-color);
+  border: 1px solid var(--card-edge);
 }
 
 .card[data-shadow="true"] {
@@ -46,4 +52,135 @@
 .content {
   position: relative;
   z-index: 1;
+}
+
+/* ---------------------------------- */
+/* Lit by a LightSource               */
+/* ---------------------------------- */
+
+/* The spotlight follows the shared light, so nearby cards catch its spill
+   even when the pointer is not over them. */
+.card[data-lit="true"] {
+  background:
+    radial-gradient(circle var(--spotlight-radius) at var(--light-x, 50%) var(--light-y, -50%),
+      color-mix(in srgb,
+        var(--card-spot) calc(var(--spotlight-intensity) * var(--light-proximity) * 100%),
+        transparent),
+      transparent 70%),
+    var(--card-fill);
+
+  transition:
+    --light-proximity 200ms ease,
+    box-shadow 200ms ease;
+}
+
+/* Rim light on the edge facing the light. */
+.card[data-lit="true"]::before {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+
+  padding: 1px;
+
+  content: "";
+
+  background: radial-gradient(
+    circle calc(var(--spotlight-radius) * 1.5) at var(--light-x, 50%) var(--light-y, -50%),
+    color-mix(
+      in srgb,
+      var(--calarys-light-color, #ffffff)
+        calc(var(--light-proximity) * var(--calarys-light-intensity, 0.6) * 100%),
+      transparent
+    ),
+    transparent 70%
+  );
+  border-radius: inherit;
+
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
+
+  pointer-events: none;
+}
+
+/* The shadow falls away from the light. */
+.card[data-lit="true"][data-shadow="true"] {
+  box-shadow:
+    calc(var(--light-nx, 0) * -2rem) calc(var(--light-ny, -1) * -2rem + 1rem)
+    5rem rgb(17 12 46 / 16%);
+}
+
+/* ---------------------------------- */
+/* Materials (inside a finish)        */
+/* ---------------------------------- */
+
+/* Surface: you look at it, so it is matte: grain under the sheen. */
+:global([data-calarys-finish]) .card {
+  background:
+    radial-gradient(circle var(--spotlight-radius) at var(--pointer-x) var(--pointer-y),
+      color-mix(in srgb,
+        var(--card-spot) calc(var(--spotlight-intensity) * var(--spotlight-active) * 100%),
+        transparent),
+      transparent 70%),
+    var(--calarys-grain),
+    var(--card-fill);
+}
+
+:global([data-calarys-finish]) .card[data-lit="true"] {
+  background:
+    radial-gradient(circle var(--spotlight-radius) at var(--light-x, 50%) var(--light-y, -50%),
+      color-mix(in srgb,
+        var(--card-spot) calc(var(--spotlight-intensity) * var(--light-proximity) * 100%),
+        transparent),
+      transparent 70%),
+    var(--calarys-grain),
+    var(--card-fill);
+}
+
+/* Edge: structure, so it is metal. The border becomes a 1px ring whose
+   shine faces the light. */
+:global([data-calarys-finish]) .card[data-border="true"] {
+  border: 0;
+}
+
+:global([data-calarys-finish]) .card[data-border="true"]::before {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+
+  padding: 1px;
+
+  content: "";
+
+  background: conic-gradient(
+    from calc(atan2(var(--light-ny, -1), var(--light-nx, 0)) + 20deg),
+    var(--calarys-metal) 0deg,
+    color-mix(
+        in srgb,
+        var(--calarys-metal-shine) calc(45% + var(--light-proximity) * 55%),
+        var(--calarys-metal)
+      )
+      70deg,
+    var(--calarys-metal) 140deg,
+    var(--calarys-metal) 220deg,
+    color-mix(in srgb, var(--calarys-metal-shine) 30%, var(--calarys-metal))
+      250deg,
+    var(--calarys-metal) 280deg
+  );
+  border-radius: inherit;
+
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
+
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .card[data-lit="true"] {
+    transition: none;
+  }
 }

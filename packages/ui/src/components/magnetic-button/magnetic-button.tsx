@@ -1,6 +1,13 @@
 "use client";
 
-import { type CSSProperties, type PointerEvent, useRef } from "react";
+import {
+  type CSSProperties,
+  type MouseEventHandler,
+  type PointerEvent,
+  useRef,
+} from "react";
+
+import { useLight } from "../../foundations/light-source";
 
 import styles from "./magnetic-button.module.css";
 
@@ -11,6 +18,7 @@ export type MagneticButtonProps = {
   duration?: number;
   backgroundColor?: string;
   textColor?: string;
+  onClick?: MouseEventHandler<HTMLButtonElement>;
 };
 
 export function MagneticButton({
@@ -18,10 +26,13 @@ export function MagneticButton({
   radius = 140,
   strength = 0.35,
   duration = 250,
-  backgroundColor = "#111111",
-  textColor = "#ffffff",
+  backgroundColor,
+  textColor,
+  onClick,
 }: MagneticButtonProps) {
   const buttonRef = useRef<HTMLButtonElement>(null);
+
+  useLight(buttonRef);
 
   function setPosition(x: number, y: number) {
     const button = buttonRef.current;
@@ -87,6 +98,8 @@ export function MagneticButton({
         type="button"
         className={styles.button}
         style={buttonStyle}
+        data-calarys-material="gloss"
+        onClick={onClick}
       >
         <span>{children}</span>
         <span aria-hidden="true">↗</span>

@@ -80,6 +80,11 @@ export const toggleDefinition = defineComponent<ToggleConfig>({
       defaultValue: '"md"',
       description: "Switch size.",
     },
+    {
+      name: "aria-label",
+      type: "string",
+      description: "Accessible name for the checkbox (the toggle has no visible label).",
+    },
   ],
 
   defaultConfig: {

@@ -44,9 +44,12 @@ The docs app uses Next.js 16.2 and React 19.2. Check `apps/docs/node_modules/nex
 
 ```
 src/
-├── index.ts                 # export * from "./components"
+├── index.ts                 # export * from "./components" and "./foundations"
 ├── global.d.ts              # *.module.css typings
-├── styles/styles.css        # shared tokens (--calarys-*), imported by consumers as "@calarys/ui/styles.css"
+├── styles/styles.css        # shared tokens (--calarys-*) and finishes, imported by consumers as "@calarys/ui/styles.css"
+├── foundations/             # systems every component shares, not components you place
+│   ├── index.ts
+│   └── light-source/        # LightSource (light + finish) and useLight
 └── components/
     ├── index.ts             # barrel: one export * per component
     └── <kebab-name>/
@@ -65,6 +68,7 @@ Component conventions (follow them for every new component):
 - Pointer-driven effects write CSS variables directly on the DOM node through a ref (`style.setProperty`) instead of React state, to avoid re-renders; throttle with `requestAnimationFrame` when needed and clean up on unmount.
 - Use shared tokens from `styles/styles.css` (`--calarys-shadow-component-sm|md|lg`); add new cross-component tokens there with the `--calarys-` prefix.
 - Plain CSS Modules only — no Tailwind inside `packages/ui`. Respect `prefers-reduced-motion` and keep focus styles (`:focus-visible`).
+- **Light and materials.** Components import `useLight` from `../../foundations/light-source`; never add a foundation to `components/` or the component registry. Call `useLight(ref)` on the element that should react to the shared `LightSource` (it gets `data-lit` and `--light-*` variables). Give every visual part a role and the material that role implies, as `data-calarys-material`: surface → `matte`, touch → `gloss`, structure → `metal`, active → `emission`. Never choose a material for taste or offer a prop to change it. Color props fall back to the finish tokens (`var(--prop, var(--calarys-…, plain default))`, no default in the destructuring), and material styles live under `:global([data-calarys-finish])` so the plain look stays unchanged.
 
 ### `apps/docs`
 
@@ -73,12 +77,17 @@ src/
 ├── app/                       # routes (App Router)
 │   ├── layout.tsx             # fonts (Instrument Sans, Cormorant Garamond), Navbar, Footer, SmoothScrollProvider, global CSS
 │   ├── page.tsx               # landing: hero + ComponentShowcase
+│   ├── foundations/           # index + light/ (LightSource playground, source, usage) + materials/ (roles → materials, Onyx and Ivory finishes)
+│   ├── demo/                  # Noct, a demo lighting app built with Calarys
 │   ├── collections/, journal/, privacy/, terms/  # simple PageIntro pages
 │   └── components/
 │       ├── page.tsx           # explorer: list + search + category filter
 │       └── [id]/page.tsx      # Preview / Code / Usage tabs (generateStaticParams, dynamicParams = false)
 ├── features/
 │   ├── component-docs/        # ComponentTabs (client), ComponentSource, ComponentUsage, getComponentSource (reads packages/ui at build)
+│   ├── demo/                  # LightingApp (Noct)
+│   ├── foundations/light/     # LightSource definition, demo and playground (outside the component registry)
+│   ├── materials/             # MaterialsShowcase
 │   ├── explorer/              # ComponentExplorer, ExplorerSearch (client), ComponentCard, utils (toExplorerItems, matchesSearch)
 │   ├── playground/            # ComponentPlayground (client) + types/playground.ts (defineComponent, control types)
 │   └── search/                # CommandPalette (⌘K / Ctrl+K native <dialog>) + useShortcutLabel
@@ -92,7 +101,7 @@ src/
     └── styles/                # globals.css, tokens.css (Tailwind v4 @theme + site colors)
 ```
 
-Data flow: `component-registry.ts` is the single source of truth. `/components` lists `getComponentDefinitions()`; `/components/[id]` validates the id with `isComponentId`, and renders `ComponentTabs`: **Preview** is `ComponentPlaygroundLoader`, which lazy loads `registry/<id>/<id>-playground.tsx` so each page only ships its own definition; that file renders `ComponentPlayground` with the definition (holds the config state, renders form controls from `definition.controls`, previews via `definition.renderConfig(config)` and shows `definition.generateCodeFromConfig(config)`), **Code** shows the files of `packages/ui/src/components/<id>/` read with `getComponentSource(id)` at build time, and **Usage** shows the import, the default example and the `props` table.
+Data flow: `component-registry.ts` is the single source of truth. `/components` lists `getComponentDefinitions()`; `/components/[id]` validates the id with `isComponentId`, and renders `ComponentTabs`: **Preview** is `ComponentPlaygroundLoader`, which lazy loads `registry/<id>/<id>-playground.tsx` so each page only ships its own definition; that file renders `ComponentPlayground` with the definition (holds the config state, renders form controls from `definition.controls`, previews via `definition.renderConfig(config)` and shows `definition.generateCodeFromConfig(config)`), **Code** shows the files of `packages/ui/src/components/<id>/` read with `getComponentSource(id)` at build time (`getComponentSource(id, "foundations")` reads `src/foundations/<id>/` for `/foundations/light`), and **Usage** shows the import, the default example and the `props` table.
 
 `defineComponent<TConfig>()` (in `features/playground/types/playground.ts`) takes `{ id, name, exportName, description, version, category, tags, props, defaultConfig, controls, render, generateCode }` (`props` is the documentation table shown in the Usage tab). Control types: `range` (min/max/step/suffix), `color`, `toggle`, `select` (options). `TConfig` values must be `string | number | boolean`. Categories: `buttons | cards | controls | navigation | text | effects`.
 

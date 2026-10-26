@@ -1,0 +1,184 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+
+  width: min(100%, 72rem);
+  margin-inline: auto;
+  padding: 15vh clamp(1.5rem, 5vw, 3rem) 8rem;
+}
+
+/* ---------------------------------- */
+/* Header                             */
+/* ---------------------------------- */
+
+.eyebrow,
+.ruleRole,
+.swatchLabel {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.eyebrow {
+  display: block;
+  margin-bottom: 1.25rem;
+
+  opacity: 0.5;
+}
+
+.title {
+  margin: 0;
+
+  font-family: var(--font-serif);
+  font-size: clamp(4rem, 10vw, 8rem);
+  font-weight: 500;
+  line-height: 0.9;
+  letter-spacing: -0.06em;
+}
+
+.lead {
+  max-width: 36rem;
+  margin: 1.5rem 0 0;
+
+  color: var(--muted);
+  font-size: 1.05rem;
+  line-height: 1.6;
+}
+
+/* ---------------------------------- */
+/* Rules                              */
+/* ---------------------------------- */
+
+.rules {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: 1px;
+
+  margin: 0;
+  padding: 0;
+
+  list-style: none;
+
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: 1.25rem;
+  overflow: hidden;
+}
+
+.rule {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  padding: 1.75rem;
+
+  background: var(--background);
+}
+
+.ruleRole {
+  opacity: 0.5;
+}
+
+.ruleMaterial {
+  font-family: var(--font-serif);
+  font-size: 2.25rem;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+.ruleText {
+  margin: 0.5rem 0 0;
+
+  color: var(--muted);
+  font-size: 0.925rem;
+  line-height: 1.55;
+}
+
+.ruleParts {
+  margin-top: auto;
+  padding-top: 1rem;
+
+  font-size: 0.8rem;
+  opacity: 0.6;
+}
+
+/* ---------------------------------- */
+/* Finishes                           */
+/* ---------------------------------- */
+
+.finish {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+
+  padding: clamp(1.5rem, 4vw, 3rem);
+
+  border-radius: 1.5rem;
+}
+
+.finish[data-finish="onyx"] {
+  color: #e8e5de;
+  background: #0b0b0c;
+}
+
+.finish[data-finish="ivory"] {
+  color: #1d1b17;
+  background: #f3f0e9;
+}
+
+.finishHeader {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.finishName {
+  margin: 0;
+
+  font-family: var(--font-serif);
+  font-size: 3rem;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+
+.finishDescription {
+  margin: 0;
+
+  font-size: 0.95rem;
+  opacity: 0.65;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: 1.25rem;
+}
+
+.swatch {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 3rem;
+
+  min-height: 9rem;
+}
+
+.swatchLabel {
+  opacity: 0.6;
+}
+
+.swatchToggles {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+}

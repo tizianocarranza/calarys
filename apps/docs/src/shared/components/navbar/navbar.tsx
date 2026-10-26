@@ -24,8 +24,10 @@ export function Navbar({ searchItems }: NavbarProps) {
 
   const links = [
     { label: "Components", href: "/components" },
+    { label: "Foundations", href: "/foundations" },
     { label: "Collections", href: "/collections" },
     { label: "Journal", href: "/journal" },
+    { label: "Demo", href: "/demo" },
     { label: "GitHub ↗", href: "https://github.com/tizianocarranza/calarys" },
   ];
 

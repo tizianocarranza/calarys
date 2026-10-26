@@ -56,4 +56,26 @@ describe("Toggle", () => {
 
     expect(label?.style.getPropertyValue("--active-color")).toBe("#ff0000");
   });
+
+  it("names the checkbox with aria-label", () => {
+    render(<Toggle aria-label="Kitchen lights" />);
+
+    expect(
+      screen.getByRole("checkbox", { name: "Kitchen lights" }),
+    ).toBeInTheDocument();
+  });
+
+  it("gives each part the material of its role", () => {
+    const { container } = render(<Toggle />);
+
+    const track = container.querySelector("[data-calarys-material='matte']");
+    const thumb = container.querySelector("[data-calarys-material='gloss']");
+
+    expect(track).toBeInTheDocument();
+    expect(thumb).toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole("checkbox"));
+
+    expect(track).toHaveAttribute("data-calarys-material", "emission");
+  });
 });
